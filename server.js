@@ -1,24 +1,27 @@
-var express = require('express'),
-  app = express(),
-  port = process.env.PORT || 3000,
-  mongoose = require('mongoose'),
-  Task = require('./api/models/eventModel'), //created model loading here
-  bodyParser = require('body-parser');
+const express       = require('express');
+const bodyParser    = require('body-parser');
+const { mongoose }  = require('./api/db/mongoose');
 
-// mongoose instance connection url connection
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://tomanino:tomanino1@ds263848.mlab.com:63848/heroku_rtll63l1');
-
-
+var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Expose-Headers', 'X-Auth');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+  next();
+});
 
-var routes = require('./api/routes/eventRoutes'); //importing route
-routes(app); //register the route
+require('./api/controllers/controllerLoader')(app);
 
+app.get('/', (req, res) => {
+  res.status(200).send('Server listening !')
+});
 
-app.listen(port);
-
-
-console.log('Event API server started on: ' + port);
+app.listen(process.env.PORT || 3000, () => {
+  console.log('Listening on port ' + process.env.PORT || 3000);
+});
+ 
+module.exports = {app}
