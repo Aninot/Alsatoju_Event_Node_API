@@ -3,7 +3,7 @@ const { Event }     = require('../../models/eventModel');
 
 // GET ALL
 exports.getEvents = function(req, res) {
-  event.find({}, function(err, events) {
+  Event.find({}, function(err, events) {
     if (err) {
       res.send(err);
     }
