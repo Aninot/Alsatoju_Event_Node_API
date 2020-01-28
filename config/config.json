@@ -1,0 +1,21 @@
+{
+    "develop": {
+        "username": "u9aqcog1ro1443n3",
+        "password": "hcl5u6du8xg2jdll",
+        "database": "vwsf6m5rgoyyeren",
+        "host": "gi6kn64hu98hy0b6.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",
+        "port": 3306,
+        "dialect": "mysql",
+        "dbUrl": "mysql://u9aqcog1ro1443n3:hcl5u6du8xg2jdll@gi6kn64hu98hy0b6.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/vwsf6m5rgoyyeren"
+    },
+    "production": {
+        "@Comment": "information to change for a real prod env",
+        "username": "u9aqcog1ro1443n3",
+        "password": "hcl5u6du8xg2jdll",
+        "database": "vwsf6m5rgoyyeren",
+        "host": "gi6kn64hu98hy0b6.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",
+        "port": 3306,
+        "dialect": "mysql",
+        "dbUrl": "mysql://u9aqcog1ro1443n3:hcl5u6du8xg2jdll@gi6kn64hu98hy0b6.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/vwsf6m5rgoyyeren"
+    }
+}
