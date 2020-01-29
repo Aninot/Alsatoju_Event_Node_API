@@ -16,7 +16,13 @@ exports.getAll = function (req, res) {
 };
 
 exports.getOne = function (req, res) {
-
+    db.Game.findOne({id: req.params.id}).then(Games => {
+            res.status(200);
+            res.json(Games);
+    }).catch(error => {
+            res.status(400);
+            res.json(error);
+    });
 };
 
 exports.postGame = function (req, res) {

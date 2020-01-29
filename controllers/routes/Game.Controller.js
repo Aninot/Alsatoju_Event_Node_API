@@ -5,7 +5,7 @@ module.exports = function (app) {
     app.get('/games', GameLib.getAll)
 
     // GET /app_users/:id
-    app.get('/games/:id', GameLib.getAll)
+    app.get('/games/:id', GameLib.getOne)
 
     // POST /app_users
     app.post('/games', GameLib.postGame)
