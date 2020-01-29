@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
   }, {
+    tableName: 'app_user',
     sequelize,
-    modelName: 'AppUser',
     freezeTableName: true,
     indexes: [
       { unique: true, fields: ['email'] },
