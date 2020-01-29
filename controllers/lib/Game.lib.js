@@ -26,7 +26,17 @@ exports.getOne = function (req, res) {
 };
 
 exports.postGame = function (req, res) {
-
+    db.Game.create({
+          name: req.body.name,
+          url: req.body.url
+        }).then(Game => {
+          res.status(201);
+          res.json(Game);
+          res.end();
+        }).catch(error => {
+          res.status(500);
+          res.json(error);
+        });
 };
 
 exports.patchGame = function (req, res) {
