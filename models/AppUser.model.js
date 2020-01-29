@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const AppUser = sequelize.define('app_user', {
+  const AppUser = sequelize.define('AppUser', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -23,9 +23,6 @@ module.exports = (sequelize, DataTypes) => {
       { unique: true, fields: ['email'] },
     ],
     underscored: true,
-    // timestamps: true,
-    // createdAt: true,
-    // updatedAt: true,
   });
 
   AppUser.associate = function (models) {

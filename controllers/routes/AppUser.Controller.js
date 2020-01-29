@@ -5,7 +5,7 @@ module.exports = function (app) {
     app.get('/app_users', AppUserLib.getAll)
 
     // GET /app_users/:id
-    app.get('/app_users/:id', AppUserLib.getAll)
+    app.get('/app_users/:id', AppUserLib.getOne)
 
     // POST /app_users
     app.post('/app_users', AppUserLib.postAppUser)

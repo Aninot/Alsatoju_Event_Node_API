@@ -41,9 +41,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     modelName: 'Event',
     freezeTableName: true,
-    timestamps: true,
-    createdAt: true,
-    updatedAt: true,
+    underscored: true,
   });
   Event.associate = function (models) {
     // associations can be defined here
