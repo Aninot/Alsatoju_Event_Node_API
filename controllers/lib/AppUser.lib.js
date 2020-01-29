@@ -1,7 +1,9 @@
 const AppUser = require('../../models/AppUser.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const privateKey = "6G#/FKE@93P!F.D?LlsFH/Vdf%sY74$ghR5fhj6FJ-dghCJfzog$!ri";
 let db = require(`../../models/index`);
+
 
 // GET ALL
 exports.getAll = function (req, res) {
@@ -45,21 +47,26 @@ exports.postAppUser = function (req, res) {
   });
 };
 
+// TODO: doit retourner l'objet mis à jour.
 exports.patchAppUser = function (req, res) {
+  body = req.body;
   if (req.body.password) {
     bcrypt.hash(req.body.password, 10, function (err, hash) {
-      db.AppUser.update({ where: { email: req.params.email } }).then(appUsers => {
+      body.password = hash;
+      db.AppUser.update(body , { where: { id: req.params.id }, returning: true,  })
+        .then( appUser => {
         res.status(200);
-        res.json(appUsers);
+        res.json(appUser);
       }).catch(error => {
         res.status(500);
         res.json(error);
       });
     });
   } else {
-    db.AppUser.update({ where: { email: req.params.email } }).then(appUsers => {
+    db.AppUser.update(body, { where: { id: req.params.id } })
+    .then( appUser => {
       res.status(200);
-      res.json(appUsers);
+      res.json(appUser);
     }).catch(error => {
       res.status(500);
       res.json(error);
@@ -78,19 +85,19 @@ exports.deleteAppUser = function (req, res) {
 };
 
 exports.postLogin = function (req, res) {
-  db.AppUser.findOne({ where: { email: req.params.email } }).then(appUsers => {
-    if (!appUsers) {
+  db.AppUser.findOne({ where: { email: req.body.email } }).then(appUser => {
+    if (!appUser) {
       res.status(400);
-      res.json({ 'message': 'KO' });
+      res.json({ 'message ': 'error while login' });
       res.end();
     }
-    bcrypt.compare(req.body.password, user.password, function (err, result) {
+    bcrypt.compare(req.body.password, appUser.password, function (err, result) {
       if (result) {
-        jwt.sign({ appUser }, private, { expiresIn: '1h' }, (err, token) => {
+        jwt.sign({ appUser }, privateKey, { algorithm: 'HS512', expiresIn: '24h' }, (err, token) => {
           if (err) {
             console.log(err);
           }
-          res.json(token);
+          res.json({'token' : token});
         });
       } else {
         res.status(400);
