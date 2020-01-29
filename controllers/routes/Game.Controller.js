@@ -1,18 +1,18 @@
 const GameLib = require('../lib/Game.lib');
 
 module.exports = function (app) {
-    // GET /app_users
+    // GET /games
     app.get('/games', GameLib.getAll)
 
-    // GET /app_users/:id
+    // GET /games/:id
     app.get('/games/:id', GameLib.getOne)
 
-    // POST /app_users
+    // POST /games
     app.post('/games', GameLib.postGame)
 
-    // PATCH /app_users/:id
+    // PATCH /games/:id
     app.patch('/games/:id', GameLib.patchGame)
 
-    // DELETE /app_users/:id
+    // DELETE /games/:id
     app.delete('/games/:id', GameLib.deleteGame)
 }
