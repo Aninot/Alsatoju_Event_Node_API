@@ -6,9 +6,14 @@ let db          = require(`../../models/index`);
 
 // GET ALL
 exports.getAll = function (req, res) {
-    db.Game.findAll({}).then(Games => {
+    db.Game.findAndCountAll({}).then(Games => {
+        if(Games) {
             res.status(200);
             res.json(Games);
+        } else {
+            res.status(404);
+            res.json({"message":"No resources founded"})
+        }
         }).catch(error => {
             res.status(400);
             res.json(error);
@@ -16,9 +21,14 @@ exports.getAll = function (req, res) {
 };
 
 exports.getOne = function (req, res) {
-    db.Game.findOne({id: req.params.id}).then(Games => {
+    db.Game.findOne({ where: {id: req.params.id} }).then(Games => {
+        if(Games) {
             res.status(200);
-            res.json(Games);
+            res.json(Game);
+        } else {
+            res.status(404);
+            res.json({"message" : "Resource not found"})
+        }
     }).catch(error => {
             res.status(400);
             res.json(error);
@@ -40,8 +50,22 @@ exports.postGame = function (req, res) {
 };
 
 exports.patchGame = function (req, res) {
+    db.Game.update({ where: { name: req.params.name } }).then(Game => {
+            res.status(200);
+            res.json(Game);
+          }).catch(error => {
+            res.status(500);
+            res.json(error);
+          });
 };
 
 exports.deleteGame = function (req, res) {
-
+    db.Game.destroy({ where: { id: req.params.id } }).then(Games => {
+        // here 204 no content we only send back the status code
+        res.status(204);
+        res.end();
+      }).catch(error => {
+        res.status(400);
+        res.json(error);
+      });
 };
