@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
     }
 
   }, {
-    modelName: 'Game',
     freezeTableName: true,
     //timestamps: true,
     createdAt: false,
