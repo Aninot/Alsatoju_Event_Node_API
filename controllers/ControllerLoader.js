@@ -4,7 +4,7 @@ const fs = require('fs');
 let files = fs.readdirSync(__dirname + '/routes/');
 
 module.exports = app => {
-    files.forEach( fileName => {
-        require(__dirname + '/routes/'+ fileName)(app);
+    files.forEach(fileName => {
+        require(__dirname + '/routes/' + fileName)(app);
     });
 }

@@ -55,8 +55,8 @@ describe('GET /app_users', () => {
 describe('DELETE /app_users/:id', () => {
   it('doit delete un AppUser', (done) => {
     request(app)
-    .delete('/app_users')
-    .expect(204)
-    .end(done);
+      .delete('/app_users')
+      .expect(204)
+      .end(done);
   });
 })

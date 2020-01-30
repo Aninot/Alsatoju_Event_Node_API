@@ -11,19 +11,19 @@ module.exports = (sequelize, DataTypes) => {
     typeId: {
       type: DataTypes.INTEGER,
       references:{
-        model: 'TypePreference',
+        model: 'type_preference',
         key : 'id'
       }
     },
     style: {
         type: DataTypes.STRING
     }
-
   }, {
     freezeTableName: true,
     //timestamps: true,
     createdAt: false,
     updatedAt: false,
+    underscored: true,
   });
   Preference.associate = function (models) {
     // associations can be defined here

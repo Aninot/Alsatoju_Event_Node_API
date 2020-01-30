@@ -34,12 +34,14 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-async function myFunction() {
-    await sequelize.sync({ alter: true });
-}
-
-myFunction().then(() => {
-    console.log('done');
-});
+// This function update the database at every start of the node server.
+// async function myFunction() {
+//     await sequelize.sync({ force: true });
+// }
+// myFunction().then(() => {
+//     console.log('Everything OK');
+// }).catch(e => {
+//     console.log('Error : ' + e);
+// });
 
 module.exports = db;

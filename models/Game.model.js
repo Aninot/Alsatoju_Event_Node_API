@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     //timestamps: true,
     createdAt: false,
     updatedAt: false,
+    underscored: true,
   });
   Game.associate = function (models) {
     // associations can be defined here

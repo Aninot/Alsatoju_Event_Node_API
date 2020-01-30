@@ -7,28 +7,33 @@ let db = require(`../../models/index`);
 
 // GET ALL
 exports.getAll = function (req, res) {
-  db.AppUser.findAll({}).then(appUsers => {
-    res.status(200);
-    res.json(appUsers);
-  }).catch(error => {
-    res.status(400);
-    res.json(error);
-  });
+  // Exemple :
+  // /app_users?param_name=test
+  // req.query.param_name pour recupérer la valeur du QueryParam (ici: test)
+  db.AppUser.findAll({})
+    .then(appUsers => {
+      res.status(200);
+      res.json(appUsers);
+    }).catch(error => {
+      res.status(400);
+      res.json(error);
+    });
 };
 
 exports.getOne = function (req, res) {
-  db.AppUser.findOne({ where: { id: req.params.id } }).then(appUsers => {
-    if (appUsers) {
-      res.status(200);
-      res.json(appUsers);
-    } else {
-      res.status(404);
-      res.json({ "message": "Resource not found" })
-    }
-  }).catch(error => {
-    res.status(400);
-    res.json(error);
-  });
+  db.AppUser.findOne({ where: { id: req.params.id } })
+    .then(appUsers => {
+      if (appUsers) {
+        res.status(200);
+        res.json(appUsers);
+      } else {
+        res.status(404);
+        res.json({ "message": "Resource not found" })
+      }
+    }).catch(error => {
+      res.status(400);
+      res.json(error);
+    });
 };
 
 exports.postAppUser = function (req, res) {
@@ -63,24 +68,24 @@ exports.patchAppUser = function (req, res) {
   if (req.body.password) {
     bcrypt.hash(req.body.password, 10, function (err, hash) {
       body.password = hash;
-      db.AppUser.update(body , { where: { id: req.params.id }, returning: true,  })
-        .then( appUser => {
+      db.AppUser.update(body, { where: { id: req.params.id }, returning: true })
+        .then(appUser => {
+          res.status(200);
+          res.json(appUser[1][0]);
+        }).catch(error => {
+          res.status(500);
+          res.json(error);
+        });
+    });
+  } else {
+    db.AppUser.update(body, { where: { id: req.params.id } })
+      .then(appUser => {
         res.status(200);
         res.json(appUser);
       }).catch(error => {
         res.status(500);
         res.json(error);
       });
-    });
-  } else {
-    db.AppUser.update(body, { where: { id: req.params.id } })
-    .then( appUser => {
-      res.status(200);
-      res.json(appUser);
-    }).catch(error => {
-      res.status(500);
-      res.json(error);
-    });
   }
 };
 
@@ -96,25 +101,26 @@ exports.deleteAppUser = function (req, res) {
 };
 
 exports.postLogin = function (req, res) {
-  db.AppUser.findOne({ where: { email: req.body.email } }).then(appUser => {
-    if (!appUser) {
-      res.status(400);
-      res.json({ 'message ': 'error while login' });
-      res.end();
-    }
-    bcrypt.compare(req.body.password, appUser.password, function (err, result) {
-      if (result) {
-        jwt.sign({ appUser }, privateKey, { algorithm: 'HS512', expiresIn: '24h' }, (err, token) => {
-          if (err) {
-            console.log(err);
-          }
-          res.json({'token' : token});
-        });
-      } else {
+  db.AppUser.findOne({ where: { email: req.body.email } })
+    .then(appUser => {
+      if (!appUser) {
         res.status(400);
-        res.json({ 'message': 'error while login' });
+        res.json({ 'message ': 'error while login' });
         res.end();
       }
+      bcrypt.compare(req.body.password, appUser.password, function (err, result) {
+        if (result) {
+          jwt.sign({ appUser }, privateKey, { algorithm: 'HS512', expiresIn: '24h' }, (err, token) => {
+            if (err) {
+              console.log(err);
+            }
+            res.json({ 'token': token });
+          });
+        } else {
+          res.status(400);
+          res.json({ 'message': 'error while login' });
+          res.end();
+        }
+      });
     });
-  });
 };

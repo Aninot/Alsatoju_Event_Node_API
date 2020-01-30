@@ -11,10 +11,11 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       references:{
-        model: 'AppUser',
+        model: 'app_user',
         key : 'id'
       }
     },
+    // On s'est pas du tout compris la dessus, pour moi c'est pas du tout scalable ce que tu as fais au niveau de ce model
     filmPreference: {
         type: DataTypes.INTEGER,
         references: {
@@ -41,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     //timestamps: true,
     createdAt: false,
     updatedAt: false,
+    underscored: true,
   });
   Like.associate = function (models) {
     // associations can be defined here

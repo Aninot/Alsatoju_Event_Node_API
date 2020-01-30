@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     img: {
       type: DataTypes.STRING
     },
-    baseURL: {
+    baseUrl: {
       type: DataTypes.STRING
     },
     tags: {
@@ -39,7 +39,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     }
   }, {
-    modelName: 'Event',
     freezeTableName: true,
     underscored: true,
   });
