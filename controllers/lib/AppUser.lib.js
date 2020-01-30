@@ -41,7 +41,7 @@ exports.postAppUser = function (req, res) {
       res.json(appUser);
       res.end();
     }).catch(error => {
-      res.status(500);
+      res.status(400);
       res.json(error);
     });
   });
@@ -78,6 +78,7 @@ exports.deleteAppUser = function (req, res) {
   db.AppUser.destroy({ where: { id: req.params.id } }).then(appUsers => {
     // here 204 no content we only send back the status code
     res.status(204);
+    res.end();
   }).catch(error => {
     res.status(400);
     res.json(error);

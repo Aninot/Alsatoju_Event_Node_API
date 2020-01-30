@@ -1,12 +1,17 @@
 {
-    "develop": {
-        "username": "u9aqcog1ro1443n3",
-        "password": "hcl5u6du8xg2jdll",
-        "database": "vwsf6m5rgoyyeren",
-        "host": "gi6kn64hu98hy0b6.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",
-        "port": 3306,
-        "dialect": "mysql",
-        "dbUrl": "mysql://u9aqcog1ro1443n3:hcl5u6du8xg2jdll@gi6kn64hu98hy0b6.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/vwsf6m5rgoyyeren"
+    "development": {
+        "username": "kcmgxbrtgcjlvk",
+        "password": "9922032b82c3e5a619e7a256d087b3af4954b6e755debb45498a7f47f07903d2",
+        "database": "d57co64emgsudo",
+        "host": "ec2-176-34-237-141.eu-west-1.compute.amazonaws.com",
+        "dialect": "postgres",
+        "ssl": true,
+        "dialectOptions": {
+            "ssl": {
+                "require": true
+            }
+        },
+        "dbUrl": "postgres://kcmgxbrtgcjlvk:9922032b82c3e5a619e7a256d087b3af4954b6e755debb45498a7f47f07903d2@ec2-176-34-237-141.eu-west-1.compute.amazonaws.com:5432/d57co64emgsudo"
     },
     "production": {
         "@Comment": "information to change for a real prod env",
