@@ -15,6 +15,37 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING
     },
+    firstName: {
+      type: DataTypes.STRING
+    },
+    lastName: {
+      type: DataTypes.STRING
+    },
+    //TODO voir pour faire des énums pour genre/orientation etc
+    gender: {
+      type: DataTypes.STRING
+    },
+    sexuality: {
+      type: DataTypes.STRING
+    },
+    avatar: {
+      type: DataTypes.STRING
+    },
+    pseudo: {
+      type: DataTypes.STRING
+    },
+    minAge: {
+      type: DataTypes.INTEGER
+    },
+    maxAge: {
+      type: DataTypes.INTEGER
+    },
+    length: {
+      type: DataTypes.INTEGER
+    },
+    description: {
+      type: DataTypes.STRING
+    },
   }, {
     tableName: 'app_user',
     sequelize,

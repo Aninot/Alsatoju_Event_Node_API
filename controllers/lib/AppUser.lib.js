@@ -35,7 +35,17 @@ exports.postAppUser = function (req, res) {
   bcrypt.hash(req.body.password, 10, function (err, hash) {
     db.AppUser.create({
       email: req.body.email,
-      password: hash
+      password: hash,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      gender: req.body.gender,
+      sexuality: req.body.sexuality,
+      avatar: req.body.avatar,
+      pseudo: req.body.pseudo,
+      minAge: req.body.minAge,
+      maxAge: req.body.maxAge,
+      length: req.body.length,
+      description: req.body.description
     }).then(appUser => {
       res.status(201);
       res.json(appUser);
