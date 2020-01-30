@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
   }, {
-  tableName:'type_preference'
+  tableName:'type_preference',
     freezeTableName: true,
     //timestamps: true,
     createdAt: false,
