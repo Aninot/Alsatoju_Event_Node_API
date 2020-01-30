@@ -21,10 +21,10 @@ exports.getAll = function (req, res) {
 };
 
 exports.getOne = function (req, res) {
-    db.Game.findOne({ where: {id: req.params.id} }).then(Games => {
-        if(Games) {
+    db.Game.findOne({ where: {id: req.params.id} }).then(game => {
+        if(game) {
             res.status(200);
-            res.json(Game);
+            res.json(game);
         } else {
             res.status(404);
             res.json({"message" : "Resource not found"})
