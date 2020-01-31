@@ -1,6 +1,6 @@
-const express       = require('express');
-const bodyParser    = require('body-parser');
-const { mongoose }  = require('./api/db/mongoose');
+const express = require('express');
+const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,17 +14,17 @@ app.use((req, res, next) => {
   next();
 });
 
-require('./api/controllers/controllerLoader')(app);
+require('./controllers/controllerLoader')(app);
 
 app.get('/', (req, res) => {
   res.status(200).send('Server listening !')
 });
 
-  let port;
-  process.env.PORT ? port = process.env.PORT : port = 3000
+let port;
+process.env.PORT ? port = process.env.PORT : port = 3000
 
 app.listen(port, () => {
   console.log('Listening on port ' + port || 3000);
 });
- 
-module.exports = {app}
+
+module.exports = { app }

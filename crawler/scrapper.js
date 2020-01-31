@@ -7,16 +7,7 @@ let eventCount = 0;
 var urlTest = "https://www.parisbouge.com/search?type=event&category=soiree&date_start=2019-05-04&date_end=2019-05-04&page=23";
 var cron = require('node-cron');
 
-// var currentDate = dateFormat(new Date(), 0);
-// var futurDate = dateFormat(new Date(), 0);
-// var homeURL =
-//     "https://www.parisbouge.com/search?type=event&category=soiree&date_start="
-//     + currentDate
-//     + "&date_end="
-//     + futurDate;
-
-function dateFormat(date, nbj)
-{
+function dateFormat(date, nbj) {
     dateYear = date.getFullYear();
     dateMois = date.getMonth();
     dateFormate="";
@@ -99,7 +90,6 @@ function removeAccents (str) {
     return str;
 };
 
-
 function formatTags (tags) {
     let sortedTags = [];
     if (tags.length > 0) {
@@ -138,7 +128,6 @@ function APIinsert (collection, object) {
 
 
 var scrapper = function(launchValues) {
-
     var homeURL =
         "https://www.parisbouge.com/search?type=event&category=soiree&date_start="
         + launchValues.start
@@ -246,7 +235,7 @@ var scrapper = function(launchValues) {
                 var styles = $('.label-event-style');
                 styles.each(function (i, style) {
                     if (style.children.length !== 0) {
-                        tags[i] = style.children[0].data;
+                        tags[i] = removeAccents(style.children[0].data);
                     }
                 });
 
@@ -267,10 +256,6 @@ var scrapper = function(launchValues) {
 };
 
 module.exports = scrapper;
-
-
-
-
 
 // console.log('Scrapper en attente...');
 // cron.schedule('0 0 0 * * *', () => {
