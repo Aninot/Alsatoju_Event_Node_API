@@ -4,13 +4,55 @@ const bcrypt = require('bcrypt');
 const privateKey = "6G#/FKE@93P!F.D?LlsFH/Vdf%sY74$ghR5fhj6FJ-dghCJfzog$!ri";
 let db = require(`../../models/index`);
 
+var forEach = function (collection, callback, scope) {
+  if (Object.prototype.toString.call(collection) === '[object Object]') {
+    for (var prop in collection) {
+      if (Object.prototype.hasOwnProperty.call(collection, prop)) {
+        callback.call(scope, collection[prop], prop, collection);
+      }
+    }
+  } else {
+    for (var i = 0, len = collection.length; i < len; i++) {
+      callback.call(scope, collection[i], i, collection);
+    }
+  }
+};
+
+var isValid = function (prop) {
+  switch (prop) {
+    case "first_name":
+      return "firstName";
+    case "last_name":
+      return "lastName";
+    case "username":
+      return true;
+    default:
+      return false;
+  }
+}
+
+function getQueryParam(filterArray) {
+  let filters = "";
+  forEach(filterArray, function (value, prop, obj) {
+    if (isValid(prop))
+      filters += isValid(prop) + ": '" + value + "', ";
+  });
+  
+  return filters.substr(0, filters.length -2);
+}
 
 // GET ALL
 exports.getAll = function (req, res) {
   // Exemple :
-  // /app_users?param_name=test
+  // /app_users?param_name=test&param_deux=otherParam
+  // req.query.param_name = test
+  // req.query.param_deux = otherParam
   // req.query.param_name pour recupérer la valeur du QueryParam (ici: test)
-  db.AppUser.findAll({})
+  filters = getQueryParam(req.query);
+  console.log();
+  console.log(filters);
+  console.log();
+  db.AppUser.findAll({ where: {filters} })
     .then(appUsers => {
       res.status(200);
       res.json(appUsers);
