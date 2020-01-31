@@ -20,14 +20,24 @@ var forEach = function (collection, callback, scope) {
 
 var isValid = function (prop) {
   switch (prop) {
+  //AppUser
     case "first_name":
       return "firstName";
     case "last_name":
       return "lastName";
+    case "min_age":
+      return "minAge";
+    case "max_age":
+      return "maxAge";
     case "email":
     case "username":
     case "sexuality":
+    case "gender":
+    case "avatar":
+    case "length":
+    case "description":
       return prop;
+    //End AppUser
     default:
       return false;
   }
