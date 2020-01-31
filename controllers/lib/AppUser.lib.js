@@ -24,35 +24,29 @@ var isValid = function (prop) {
       return "firstName";
     case "last_name":
       return "lastName";
+    case "email":
     case "username":
-      return true;
+    case "sexuality":
+      return prop;
     default:
       return false;
   }
 }
 
 function getQueryParam(filterArray) {
-  let filters = "";
+  let filters = {};
   forEach(filterArray, function (value, prop, obj) {
-    if (isValid(prop))
-      filters += isValid(prop) + ": '" + value + "', ";
+    if (isValid(prop)) {
+      filters[isValid(prop)] = value;
+    }
   });
-  
-  return filters.substr(0, filters.length -2);
+  return filters;
 }
 
 // GET ALL
 exports.getAll = function (req, res) {
-  // Exemple :
-  // /app_users?param_name=test&param_deux=otherParam
-  // req.query.param_name = test
-  // req.query.param_deux = otherParam
-  // req.query.param_name pour recupérer la valeur du QueryParam (ici: test)
   filters = getQueryParam(req.query);
-  console.log();
-  console.log(filters);
-  console.log();
-  db.AppUser.findAll({ where: {filters} })
+  db.AppUser.findAll({ where: filters ? filters : {} })
     .then(appUsers => {
       res.status(200);
       res.json(appUsers);
