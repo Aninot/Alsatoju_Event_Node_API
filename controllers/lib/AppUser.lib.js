@@ -1,22 +1,9 @@
 const AppUser = require('../../models/AppUser.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const ForEach = require('../../services/ForEach.Service');
 const privateKey = "6G#/FKE@93P!F.D?LlsFH/Vdf%sY74$ghR5fhj6FJ-dghCJfzog$!ri";
 let db = require(`../../models/index`);
-
-var forEach = function (collection, callback, scope) {
-  if (Object.prototype.toString.call(collection) === '[object Object]') {
-    for (var prop in collection) {
-      if (Object.prototype.hasOwnProperty.call(collection, prop)) {
-        callback.call(scope, collection[prop], prop, collection);
-      }
-    }
-  } else {
-    for (var i = 0, len = collection.length; i < len; i++) {
-      callback.call(scope, collection[i], i, collection);
-    }
-  }
-};
 
 var isValid = function (prop) {
   switch (prop) {
@@ -35,7 +22,7 @@ var isValid = function (prop) {
 
 function getQueryParam(filterArray) {
   let filters = {};
-  forEach(filterArray, function (value, prop, obj) {
+  ForEach(filterArray, function (value, prop, obj) {
     if (isValid(prop)) {
       filters[isValid(prop)] = value;
     }
