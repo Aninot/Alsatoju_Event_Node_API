@@ -4,13 +4,13 @@ const bcrypt = require('bcrypt');
 const privateKey = "6G#/FKE@93P!F.D?LlsFH/Vdf%sY74$ghR5fhj6FJ-dghCJfzog$!ri";
 let db = require(`../../models/index`);
 
-
 // GET ALL
 exports.getAll = function (req, res) {
   // Exemple :
   // /app_users?param_name=test
   // req.query.param_name pour recupérer la valeur du QueryParam (ici: test)
-  db.AppUser.findAll({})
+  // TODO : check les values recu dans req.query
+  db.AppUser.findAll({ where: req.query })
     .then(appUsers => {
       res.status(200);
       res.json(appUsers);

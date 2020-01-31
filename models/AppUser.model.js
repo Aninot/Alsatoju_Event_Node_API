@@ -25,16 +25,13 @@ module.exports = (sequelize, DataTypes) => {
     gender: {
       type: DataTypes.STRING
     },
-    // *AL* J'imagine que c'est l'orientation ?
-    // *TA* -> Yes
+    // orientation sexuelle
     sexuality: {
       type: DataTypes.STRING
     },
     avatar: {
       type: DataTypes.STRING
     },
-    // *AL* username fait plus de sens pour moi mais ce n'est qu'un détail que l'on peut discuter et laisser comme Thomas l'a fait.
-    // *TA* -> You'r right, let's go username
     username: {
       type: DataTypes.STRING
     },
@@ -49,10 +46,8 @@ module.exports = (sequelize, DataTypes) => {
     maxAge: {
       type: DataTypes.INTEGER
     },
-    // *AL* en cm ou m ? car si m alors float (1.70 par exemple) , si cm pas de problème (170)
-    // *TA* -> cm
-    length: {
-      type: DataTypes.INTEGER
+    length: { // en centimetre
+      type: DataTypes.INTEGER(3)
     },
     // *AL* Je croyais qu'il n'y avait pas de saisi de l'utilisateur ?
     // *TA* -> C'est le vocal, mais en attendant de savoir le stocker je l'ai mis en STRING pour faciliter les échantes
