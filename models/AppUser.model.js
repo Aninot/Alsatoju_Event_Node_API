@@ -25,32 +25,37 @@ module.exports = (sequelize, DataTypes) => {
     gender: {
       type: DataTypes.STRING
     },
-    // J'imagine que c'est l'orientation ?
+    // *AL* J'imagine que c'est l'orientation ?
+    // *TA* -> Yes
     sexuality: {
       type: DataTypes.STRING
     },
     avatar: {
       type: DataTypes.STRING
     },
-    // username fait plus de sens pour moi mais ce n'est qu'un détail que l'on peut discuter et laisser comme Thomas l'a fait.
-    pseudo: {
+    // *AL* username fait plus de sens pour moi mais ce n'est qu'un détail que l'on peut discuter et laisser comme Thomas l'a fait.
+    // *TA* -> You'r right, let's go username
+    username: {
       type: DataTypes.STRING
     },
-    // TODO: le min est le max peut etre remplacer par une string 'min-max' ou min est max sont les valeurs min et max.
+    // *AL* TODO: le min est le max peut etre remplacer par une string 'min-max' ou min est max sont les valeurs min et max.
     // Ainsi avec un explode on récupère notre information et cela permet d'avoir moins de colonne.
     // ageSearch : { type: DataTypes.STRING(7) }
     // varchar de 7 caractères max.
+    // *TA* -> Voir avec Julien
     minAge: {
       type: DataTypes.INTEGER
     },
     maxAge: {
       type: DataTypes.INTEGER
     },
-    // en cm ou m ? car si m alors float (1.70 par exemple) , si cm pas de problème (170)
+    // *AL* en cm ou m ? car si m alors float (1.70 par exemple) , si cm pas de problème (170)
+    // *TA* -> cm
     length: {
       type: DataTypes.INTEGER
     },
-    // Je croyais qu'il n'y avait pas de saisi de l'utilisateur ?
+    // *AL* Je croyais qu'il n'y avait pas de saisi de l'utilisateur ?
+    // *TA* -> C'est le vocal, mais en attendant de savoir le stocker je l'ai mis en STRING pour faciliter les échantes
     description: {
       type: DataTypes.STRING
     },

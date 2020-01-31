@@ -46,7 +46,7 @@ exports.postAppUser = function (req, res) {
       gender: req.body.gender,
       sexuality: req.body.sexuality,
       avatar: req.body.avatar,
-      pseudo: req.body.pseudo,
+      username: req.body.username,
       minAge: req.body.minAge,
       maxAge: req.body.maxAge,
       length: req.body.length,

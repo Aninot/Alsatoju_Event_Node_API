@@ -15,22 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         key : 'id'
       }
     },
-    // On s'est pas du tout compris la dessus, pour moi c'est pas du tout scalable ce que tu as fais au niveau de ce model
-    filmPreference: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: 'Preference',
-            key : 'id'
-        }
-    },
-    musicPreference: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: 'Preference',
-            key : 'id'
-        }
-    },
-    otherPreference: {
+    // *AL* On s'est pas du tout compris la dessus, pour moi c'est pas du tout scalable ce que tu as fais au niveau de ce model
+    // *TA* -> j'avais fumé, la fatigue sans doute... C'est corrigé
+    preference: {
         type: DataTypes.INTEGER,
         references: {
             model: 'Preference',
