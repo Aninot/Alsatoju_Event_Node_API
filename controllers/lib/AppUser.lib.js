@@ -32,7 +32,7 @@ var isValid = function (prop) {
 
 function getQueryParam(filterArray) {
   let filters = {};
-  ForEach(filterArray, function (value, prop, obj) {
+  ForEach.forEach(filterArray, function (value, prop, obj) {
     if (isValid(prop)) {
       filters[isValid(prop)] = value;
     }
