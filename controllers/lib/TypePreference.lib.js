@@ -4,9 +4,31 @@ const fs = require('fs');
 const bcrypt = require('bcrypt');
 let db = require(`../../models/index`);
 
+const ForEach = require('../../services/ForEach.Service');
+
+var isValid = function (prop) {
+  switch (prop) {
+    case "type":
+      return prop;
+    default:
+      return false;
+  }
+}
+
+function getQueryParam(filterArray) {
+  let filters = {};
+  ForEach(filterArray, function (value, prop, obj) {
+    if (isValid(prop)) {
+      filters[isValid(prop)] = value;
+    }
+  });
+  return filters;
+}
+
 // GET ALL
 exports.getAll = function (req, res) {
-  db.TypePreference.findAndCountAll({}).then(TypePreferences => {
+  filters = getQueryParam(req.query)
+  db.TypePreference.findAndCountAll({ where: filters ? filters : {} }).then(TypePreferences => {
     if (TypePreferences) {
       res.status(200);
       res.json(TypePreferences);
