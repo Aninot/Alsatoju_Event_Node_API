@@ -8,8 +8,10 @@
         "ssl": true,
         "dialectOptions": {
             "ssl": {
-                "require": true
-            }
+                "require": true,
+                "rejectUnauthorized": false
+            },
+            "keepAlive": true
         },
         "url": "postgres://kcmgxbrtgcjlvk:9922032b82c3e5a619e7a256d087b3af4954b6e755debb45498a7f47f07903d2@ec2-176-34-237-141.eu-west-1.compute.amazonaws.com:5432/d57co64emgsudo",
         "seederStorage": "sequelize",

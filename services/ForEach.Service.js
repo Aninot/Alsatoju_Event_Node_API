@@ -1,3 +1,5 @@
+'use strict';
+
 exports.forEach = function (collection, callback, scope) {
   if (Object.prototype.toString.call(collection) === '[object Object]') {
     for (var prop in collection) {
