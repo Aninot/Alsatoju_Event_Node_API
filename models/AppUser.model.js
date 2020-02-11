@@ -29,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
     sexuality: {
       type: DataTypes.STRING
     },
+    sexualityPref: {
+      type: DataTypes.STRING
+    },
     avatar: {
       type: DataTypes.STRING
     },
@@ -46,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     maxAge: {
       type: DataTypes.INTEGER
     },
+    // *JF* A changer pour size non ? et je parle pas de la taille de sa b***
     length: { // en centimetre
       type: DataTypes.INTEGER(3)
     },
@@ -54,17 +58,25 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING
     },
+    // *JU* Diametre de recherche de profils
+    positionRange: {
+      type: DataTypes.INTEGER
+    },
+    geoLocPosition: {
+      type: DataTypes.STRING
+    }
   }, {
     tableName: 'app_user',
     sequelize,
     freezeTableName: true,
-    indexes: [
-      { unique: true, fields: ['email'] },
-    ],
+    indexes: [{
+      unique: true,
+      fields: ['email']
+    }, ],
     underscored: true,
   });
 
-// This function is used to not serialize the password.
+  // This function is used to not serialize the password.
   AppUser.prototype.toJSON = function () {
     var values = Object.assign({}, this.get());
 
