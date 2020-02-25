@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(7)
     },
     heightInCentimeter: {
-      type: DataTypes.INTEGER(3)
+      type: DataTypes.INTEGER
     },
     // *AL* Je croyais qu'il n'y avait pas de saisi de l'utilisateur ?
     // *TA* -> C'est le vocal, mais en attendant de savoir le stocker je l'ai mis en STRING pour faciliter les échantes
