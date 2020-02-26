@@ -18,7 +18,6 @@
         "seederStorageTableName": "SequelizeData"
     },
     "production": {
-        "@Comment": "information to change for a real prod env",
         "username": "ouwzysulmcxyqb",
         "password": "59c6cc3505e3e3b4053870b55e7ecc29a0231d76acbd1b8042b5ea6495e152ac",
         "database": "dbuf0jhdg229bq",
