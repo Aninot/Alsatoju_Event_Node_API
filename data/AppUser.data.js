@@ -5,7 +5,7 @@ exports.users = [
         firstName: "Alan",
         lastname: "LIMA",
         gender: "Male",
-        sexualityPref: "HeteroSexual",
+        sexualityPref: "Male",
         username: "2T",
         ageTargeted: "22-28",
         heighInCentimeter: 191
@@ -16,7 +16,7 @@ exports.users = [
         firstName: "Thomas",
         lastname: "ANINOT",
         gender: "Male",
-        sexualityPref: "HeteroSexual",
+        sexualityPref: "Male",
         username: "",
         ageTargeted: "",
         heighInCentimeter: null
@@ -27,7 +27,7 @@ exports.users = [
         firstName: "Julien",
         lastname: "FEGER",
         gender: "Male",
-        sexualityPref: "HeteroSexual",
+        sexualityPref: "Female",
         username: "",
         ageTargeted: "",
         heighInCentimeter: null
@@ -38,7 +38,7 @@ exports.users = [
         firstName: "Sarah",
         lastname: "..",
         gender: "Female",
-        sexualityPref: "HeteroSexual",
+        sexualityPref: "Male",
         username: "",
         ageTargeted: "",
         heighInCentimeter: null

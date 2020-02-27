@@ -16,17 +16,17 @@ BEGIN
     FOR utilisateurId IN
                 select user_id from (select distinct user_id from "Like" l where preference in (select preference from "Like" l2 where user_id = $1) and user_id != $1) as truc
                 	where
-                	(user_id not in (select id_user_two from "Matching" m where id_user_one = $1))
-                    and (user_id not in (select id_user_one from "Matching" m2 where id_user_two = $1))
+                	(user_id not in (select id_user_two from matching m3 where id_user_one = $1))
+                    and (user_id not in (select id_user_one from matching m2 where id_user_two = $1))
     LOOP
         CASE WHEN (select sexuality_pref from app_user au where id = $1) != 'A'
                     and (select gender from app_user au2 where id = $1) != 'A'
                     and (select gender from app_user au3 where id = utilisateurId) = (select sexuality_pref from app_user au5 where id = $1)
                     and (select sexuality_pref from app_user au4 where id = utilisateurId) = (select gender from app_user au6 where id = $1)
                 THEN INSERT INTO MATCHING VALUES ($1, utilisateurId, null, null);
-             WHEN (select sexuality_pref from app_user au7 where id = $1) = 'A'
-                    and (select gender from app_user au8 where id = $1) != 'A'
-                    and (select sexuality_pref from app_user au9 where id = utilisateurId) = (select gender from app_user au14 where id = $1)
+             WHEN (select sexuality_pref from app_user au7 where id = $1) != 'A'
+                    and (select gender from app_user au8 where id = $1) = 'A'
+                    and (select sexuality_pref from app_user au9 where id = $1) = (select gender from app_user au14 where id = utilisateurId)
                 THEN INSERT INTO MATCHING VALUES ($1, utilisateurId, null, null);
             WHEN (select sexuality_pref from app_user au10 where id = $1) = 'A'
                     and (select gender from app_user au11 where id = $1) != 'A'
