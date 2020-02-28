@@ -7,6 +7,7 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const { users } = require('../data/AppUser.data');
+const { preferences } = require('../data/Preference.data');
 const db = {};
 
 let sequelize;
@@ -36,13 +37,19 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 // This function update the database at every start of the node server.
-// async function myFunction() {
+// async function initDb() {
+//   // Regen the database table
 //   await sequelize.sync({ force: true });
+//   // Fill the app_user table
 //   await db.AppUser.bulkCreate(users);
+//   // Fill the preference table
+//   await db.Preference.bulkCreate(preferences);
 // }
-// myFunction().then(() => {
+// initDb().then(() => {
+//   // if display then everything went good.
 //   console.log('Everything OK');
 // }).catch(e => {
+//   // display the error encounter
 //   console.log('Error : ' + e);
 // });
 
