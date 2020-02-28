@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
   Matching.associate = function (models) {
     // associations can be defined here
 
-    Matching.hasOne(models.AppUser, { as: 'idUserOne' });
-    Matching.hasOne(models.AppUser, { as: 'idUserTwo' });
+    // Matching.hasOne(models.AppUser, { as: 'idUserOne' });
+    // Matching.hasOne(models.AppUser, { as: 'idUserTwo' });
   };
   return Matching;
 
