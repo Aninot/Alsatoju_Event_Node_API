@@ -1,4 +1,4 @@
-exports.users = [
+exports.preferences = [
     {
         id : 1,
         type_id: 1,
