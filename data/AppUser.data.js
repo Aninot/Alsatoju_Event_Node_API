@@ -1,5 +1,6 @@
 exports.users = [
     {
+        id: 1,
         email: "alanlima898@gmail.com",
         password: "$2b$10$GxUxJ4SFTA823.Jnl4HXqO1y8d6VGwVQPdpQG4a9xpBnNIa/LlAP6",
         firstName: "Alan",
@@ -11,6 +12,7 @@ exports.users = [
         heighInCentimeter: 191
     },
     {
+        id: 2,
         email: "aninothomas@gmail.com",
         password: "$2b$10$GxUxJ4SFTA823.Jnl4HXqO1y8d6VGwVQPdpQG4a9xpBnNIa/LlAP6",
         firstName: "Thomas",
@@ -22,6 +24,7 @@ exports.users = [
         heighInCentimeter: null
     },
     {
+        id: 3,
         email: "julien@hypecode.com",
         password: "$2b$10$GxUxJ4SFTA823.Jnl4HXqO1y8d6VGwVQPdpQG4a9xpBnNIa/LlAP6",
         firstName: "Julien",
@@ -33,6 +36,7 @@ exports.users = [
         heighInCentimeter: null
     },
     {
+        id: 4,
         email: "sarah@aston.com",
         password: "$2b$10$GxUxJ4SFTA823.Jnl4HXqO1y8d6VGwVQPdpQG4a9xpBnNIa/LlAP6",
         firstName: "Sarah",

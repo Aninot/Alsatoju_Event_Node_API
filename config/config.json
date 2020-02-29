@@ -26,9 +26,13 @@
         "ssl": true,
         "dialectOptions": {
             "ssl": {
-                "require": true
-            }
+                "require": true,
+                "rejectUnauthorized": false
+            },
+            "keepAlive": true
         },
-        "url": "postgres://ouwzysulmcxyqb:59c6cc3505e3e3b4053870b55e7ecc29a0231d76acbd1b8042b5ea6495e152ac@ec2-79-125-25-171.eu-west-1.compute.amazonaws.com:5432/dbuf0jhdg229bq"
+        "url": "postgres://ouwzysulmcxyqb:59c6cc3505e3e3b4053870b55e7ecc29a0231d76acbd1b8042b5ea6495e152ac@ec2-79-125-25-171.eu-west-1.compute.amazonaws.com:5432/dbuf0jhdg229bq",
+        "seederStorage": "sequelize",
+        "seederStorageTableName": "SequelizeData"
     }
 }
