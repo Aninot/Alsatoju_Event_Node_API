@@ -1,4 +1,4 @@
-const Preference = require('../../models/Preference.model');
+const Matching = require('../../models/Matching.model');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
@@ -8,10 +8,14 @@ const ForEach = require('../../services/ForEach.Service');
 
 var isValid = function (prop) {
   switch (prop) {
-    case "type_id":
-      return "typeId";
-    case "style":
-      return prop;
+    case "id_user_one":
+        return "idUserOne";
+    case "id_user_two":
+        return "idUserTwo";
+    case "response_user_one":
+        return "responseUserOne";
+    case "response_user_two":
+        return "responseUserTwo";
     default:
       return false;
   }
@@ -29,11 +33,11 @@ function getQueryParam(filterArray) {
 
 // GET ALL
 exports.getAll = function (req, res) {
-  filters = getQueryParam(req.query)
-  db.Preference.findAndCountAll({ where: filters ? filters : {} }).then(Preferences => {
-    if (Preferences) {
+  filters = getQueryParam(req.query);
+  db.Matching.findAndCountAll({ where: filters ? filters : {} }).then(Matchings => {
+    if (Matchings) {
       res.status(200);
-      res.json(Preferences);
+      res.json(Matchings);
     } else {
       res.status(404);
       res.json({ "message": "No resources founded" })
@@ -44,11 +48,11 @@ exports.getAll = function (req, res) {
   });
 };
 
-exports.getOne = function (req, res) {
-  db.Preference.findOne({ where: { id: req.params.id } }).then(preference => {
-    if (preference) {
+exports.getMyMatchs = function (req, res) {
+  db.Matching.findAndCountAll({ where: Sequelize.or( { id_user_one: req.params.id }, { id_user_two: req.params.id } ) }).then(matchings => {
+    if (matchings) {
       res.status(200);
-      res.json(preference);
+      res.json(matching);
     } else {
       res.status(404);
       res.json({ "message": "Resource not found" })
@@ -59,13 +63,13 @@ exports.getOne = function (req, res) {
   });
 };
 
-exports.postPreference = function (req, res) {
-  db.Preference.create({
-    typeId: req.body.typeId,
-    style: req.body.style
-  }).then(Preference => {
+exports.postMatching = function (req, res) {
+  db.Matching.create({
+    name: req.body.name,
+    url: req.body.url
+  }).then(Matching => {
     res.status(201);
-    res.json(Preference);
+    res.json(Matching);
     res.end();
   }).catch(error => {
     res.status(500);
@@ -73,18 +77,18 @@ exports.postPreference = function (req, res) {
   });
 };
 
-exports.patchPreference = function (req, res) {
-  db.Preference.update({ where: { style: req.params.style } }).then(Preference => {
+exports.patchMatching = function (req, res) {
+  db.Matching.update({ where: { name: req.params.name } }).then(Matching => {
     res.status(200);
-    res.json(Preference);
+    res.json(Matching);
   }).catch(error => {
     res.status(500);
     res.json(error);
   });
 };
 
-exports.deletePreference = function (req, res) {
-  db.Preference.destroy({ where: { id: req.params.id } }).then(Preferences => {
+exports.deleteMatching = function (req, res) {
+  db.Matching.destroy({ where: { id: req.params.id } }).then(Matchings => {
     // here 204 no content we only send back the status code
     res.status(204);
     res.end();

@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     // orientation sexuelle
-    sexuality: {
+    sexualityPref: {
       type: DataTypes.STRING
     },
     avatar: {
@@ -35,36 +35,37 @@ module.exports = (sequelize, DataTypes) => {
     username: {
       type: DataTypes.STRING
     },
-    // *AL* TODO: le min est le max peut etre remplacer par une string 'min-max' ou min est max sont les valeurs min et max.
-    // Ainsi avec un explode on récupère notre information et cela permet d'avoir moins de colonne.
-    // ageSearch : { type: DataTypes.STRING(7) }
-    // varchar de 7 caractères max.
-    // *TA* -> Voir avec Julien
-    minAge: {
-      type: DataTypes.INTEGER
+    ageTargeted: {
+      type: DataTypes.STRING(7)
     },
-    maxAge: {
+    heightInCentimeter: {
       type: DataTypes.INTEGER
-    },
-    length: { // en centimetre
-      type: DataTypes.INTEGER(3)
     },
     // *AL* Je croyais qu'il n'y avait pas de saisi de l'utilisateur ?
     // *TA* -> C'est le vocal, mais en attendant de savoir le stocker je l'ai mis en STRING pour faciliter les échantes
     description: {
       type: DataTypes.STRING
     },
+    // Diametre de recherche de profils
+    positionRange: {
+      type: DataTypes.INTEGER
+    },
+    geoLocPosition: {
+      type: DataTypes.STRING
+    }
   }, {
     tableName: 'app_user',
     sequelize,
     freezeTableName: true,
-    indexes: [
-      { unique: true, fields: ['email'] },
+    indexes: [{
+        unique: true,
+        fields: ['email']
+      },
     ],
     underscored: true,
   });
 
-// This function is used to not serialize the password.
+  // This function is used to not serialize the password.
   AppUser.prototype.toJSON = function () {
     var values = Object.assign({}, this.get());
 
@@ -75,5 +76,6 @@ module.exports = (sequelize, DataTypes) => {
   AppUser.associate = function (models) {
     // associations can be defined here
   };
+
   return AppUser;
 };

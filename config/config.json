@@ -8,15 +8,16 @@
         "ssl": true,
         "dialectOptions": {
             "ssl": {
-                "require": true
-            }
+                "require": true,
+                "rejectUnauthorized": false
+            },
+            "keepAlive": true
         },
         "url": "postgres://kcmgxbrtgcjlvk:9922032b82c3e5a619e7a256d087b3af4954b6e755debb45498a7f47f07903d2@ec2-176-34-237-141.eu-west-1.compute.amazonaws.com:5432/d57co64emgsudo",
         "seederStorage": "sequelize",
         "seederStorageTableName": "SequelizeData"
     },
     "production": {
-        "@Comment": "information to change for a real prod env",
         "username": "ouwzysulmcxyqb",
         "password": "59c6cc3505e3e3b4053870b55e7ecc29a0231d76acbd1b8042b5ea6495e152ac",
         "database": "dbuf0jhdg229bq",

@@ -1,6 +1,6 @@
 const expect = require('expect');
 const request = require('supertest');
-const { app } = require('./../server');
+const { app } = require('../server');
 const { Game } = require('../models/Game.model');
 
 const games = [{

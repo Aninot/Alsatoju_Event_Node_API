@@ -59,4 +59,8 @@ describe('DELETE /app_users/:id', () => {
       .expect(204)
       .end(done);
   });
+});
+
+describe('', () => {
+  it('doit ajouter un user avec des préférence')
 })

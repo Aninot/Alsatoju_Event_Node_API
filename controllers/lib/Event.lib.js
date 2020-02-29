@@ -1,9 +1,41 @@
 const Event = require('../../models/Event.model');
 let db = require(`../../models/index`);
 
+const ForEach = require('../../services/ForEach.Service');
+
+var isValid = function (prop) {
+  switch (prop) {
+    case "base_url":
+      return "baseUrl";
+    case "name":
+    case "address":
+    case "description":
+    case "price":
+    case "img":
+    case "tags":
+    case "start":
+    case "end":
+    case "location":
+      return prop;
+    default:
+      return false;
+  }
+}
+
+function getQueryParam(filterArray) {
+  let filters = {};
+  ForEach.forEach(filterArray, function (value, prop, obj) {
+    if (isValid(prop)) {
+      filters[isValid(prop)] = value;
+    }
+  });
+  return filters;
+}
+
 // GET ALL
 exports.getEvents = function (req, res) {
-  db.Event.findAndCountAll({}).then(Events => {
+  filters = getQueryParam(req.query)
+  db.Event.findAndCountAll({ where: filters ? filters : {} }).then(Events => {
     if (Events) {
       res.status(200);
       res.json(Events);

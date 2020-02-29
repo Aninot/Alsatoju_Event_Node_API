@@ -4,9 +4,34 @@ const fs = require('fs');
 const bcrypt = require('bcrypt');
 let db = require(`../../models/index`);
 
+const ForEach = require('../../services/ForEach.Service');
+
+var isValid = function (prop) {
+  switch (prop) {
+    case "user_id":
+      return "userId";
+    case "name":
+    case "url":
+      return prop;
+    default:
+      return false;
+  }
+}
+
+function getQueryParam(filterArray) {
+  let filters = {};
+  ForEach.forEach(filterArray, function (value, prop, obj) {
+    if (isValid(prop)) {
+      filters[isValid(prop)] = value;
+    }
+  });
+  return filters;
+}
+
 // GET ALL
 exports.getAll = function (req, res) {
-  db.Game.findAndCountAll({}).then(Games => {
+  filters = getQueryParam(req.query);
+  db.Game.findAndCountAll({ where: filters ? filters : {} }).then(Games => {
     if (Games) {
       res.status(200);
       res.json(Games);
