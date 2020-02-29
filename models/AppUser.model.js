@@ -21,7 +21,6 @@ module.exports = (sequelize, DataTypes) => {
     lastName: {
       type: DataTypes.STRING
     },
-    //TODO: voir pour faire des énums pour genre/orientation etc
     gender: {
       type: DataTypes.STRING
     },
@@ -36,13 +35,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     ageTargeted: {
-      type: DataTypes.STRING(7)
+      type: DataTypes.STRING
     },
     heightInCentimeter: {
       type: DataTypes.INTEGER
     },
-    // *AL* Je croyais qu'il n'y avait pas de saisi de l'utilisateur ?
-    // *TA* -> C'est le vocal, mais en attendant de savoir le stocker je l'ai mis en STRING pour faciliter les échantes
+    // Stockage de la note vocale
     description: {
       type: DataTypes.STRING
     },
@@ -68,7 +66,6 @@ module.exports = (sequelize, DataTypes) => {
   // This function is used to not serialize the password.
   AppUser.prototype.toJSON = function () {
     var values = Object.assign({}, this.get());
-
     delete values.password;
     return values;
   };
