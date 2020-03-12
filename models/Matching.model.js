@@ -2,6 +2,12 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Matching = sequelize.define('Matching', {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
     idUserOne: {
       type: DataTypes.INTEGER,
       references:{
@@ -31,9 +37,8 @@ module.exports = (sequelize, DataTypes) => {
   });
   Matching.associate = function (models) {
     // associations can be defined here
-/*
-    Matching.hasOne(models.AppUser, { foreignKey : id, as: 'idUserOne' });
-    Matching.hasOne(models.AppUser, { foreignKey : id, as: 'idUserTwo' });*/
+    Matching.belongsTo(models.AppUser, { as : 'UserOne'});
+    Matching.belongsTo(models.AppUser, { as : 'UserTwo'});
   };
   return Matching;
 

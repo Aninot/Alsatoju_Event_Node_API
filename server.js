@@ -14,7 +14,7 @@ app.use((req, res, next) => {
   next();
 });
 
-require('./controllers/controllerLoader')(app);
+require('./controllers/ControllerLoader')(app);
 
 app.get('/', (req, res) => {
   res.status(200).send('Server listening !')
