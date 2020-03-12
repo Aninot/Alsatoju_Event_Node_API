@@ -16,14 +16,17 @@ var isValid = function (prop) {
       return "ageTargeted";
     case "height_in_centimeter":
       return "heightInCentimeter";
+    case "sexuality_pref":
+      return "sexualityPref";
+    case "position_range":
+      return "positionRange";
+    case "geo_loc_position":
+      return "geoLocPosition";
     case "email":
     case "username":
-    case "sexualityPref":
     case "gender":
     case "avatar":
     case "description":
-    case "positionRange":
-    case "geoLocPosition":
       return prop;
     default:
       return false;
@@ -84,13 +87,13 @@ exports.postAppUser = function (req, res) {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       gender: req.body.gender,
-      sexuality: req.body.sexuality,
+      sexualityPref: req.body.sexualityPref,
       avatar: req.body.avatar,
       username: req.body.username,
-      minAge: req.body.minAge,
-      maxAge: req.body.maxAge,
-      length: req.body.length,
-      description: req.body.description
+      ageTargeted: req.body.ageTargeted,
+      heightInCentimeter: req.body.heightInCentimeter,
+      description: req.body.description,
+      positionRange: req.body.positionRange
     }).then(appUser => {
       res.status(201);
       res.json(appUser);
