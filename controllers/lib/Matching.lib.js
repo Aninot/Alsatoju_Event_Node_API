@@ -1,18 +1,20 @@
 const Matching = require('../../models/Matching.model');
+const AppUser = require('../../models/AppUser.model');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const AppUser = require('../../models/AppUser.model');
 const Sequelize = require("sequelize");
 let db = require(`../../models/index`);
+const Sequelize = require('sequelize');
 
 const ForEach = require('../../services/ForEach.Service');
 
 var isValid = function (prop) {
   switch (prop) {
-    case "user_one_id":
+    case "user_one":
         return "UserOneId";
-    case "user_two_id":
+    case "user_two":
         return "UserTwoId";
     case "response_user_one":
         return "responseUserOne";
@@ -36,7 +38,10 @@ function getQueryParam(filterArray) {
 // GET ALL
 exports.getAll = function (req, res) {
   filters = getQueryParam(req.query);
-  db.Matching.findAndCountAll({ where: filters ? filters : {}}).then(Matchings => {
+  db.Matching.findAll({ 
+    where: filters ? filters : {},
+    //include : [AppUser]
+  }).then(Matchings => {
     if (Matchings) {
       res.status(200);
       res.json(Matchings);
@@ -45,21 +50,30 @@ exports.getAll = function (req, res) {
       res.json({ "message": "No resources founded" })
     }
   }).catch(error => {
+    console.log(error);
     res.status(400);
     res.json(error);
   });
 };
 
 exports.getMyMatchs = function (req, res) {
-  db.Matching.findAndCountAll({ where: Sequelize.or( { user_one: req.params.id }, { user_two: req.params.id } ) }).then(matchings => {
+  console.log(req.params)
+  db.Matching.findAll({ 
+    where:
+      Sequelize.or(
+        { UserOneId: req.params.id }, 
+        { UserTwoId: req.params.id }
+      )
+  }).then(matchings => {
     if (matchings) {
       res.status(200);
-      res.json(matching);
+      res.json(matchings);
     } else {
       res.status(404);
       res.json({ "message": "Resource not found" })
     }
   }).catch(error => {
+    console.log(error);
     res.status(400);
     res.json(error);
   });
