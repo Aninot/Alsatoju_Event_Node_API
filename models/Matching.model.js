@@ -8,20 +8,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    idUserOne: {
-      type: DataTypes.INTEGER,
-      references:{
-        model: 'app_user',
-        key : 'id'
-      }
-    },
-    idUserTwo: {
-      type: DataTypes.INTEGER,
-      references:{
-        model: 'app_user',
-        key : 'id'
-      }
-    },
     responseUserOne: {
       type: DataTypes.BOOLEAN
     },
