@@ -2,16 +2,18 @@ const Matching = require('../../models/Matching.model');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
+const AppUser = require('../../models/AppUser.model');
+const Sequelize = require("sequelize");
 let db = require(`../../models/index`);
 
 const ForEach = require('../../services/ForEach.Service');
 
 var isValid = function (prop) {
   switch (prop) {
-    case "id_user_one":
-        return "idUserOne";
-    case "id_user_two":
-        return "idUserTwo";
+    case "user_one_id":
+        return "UserOneId";
+    case "user_two_id":
+        return "UserTwoId";
     case "response_user_one":
         return "responseUserOne";
     case "response_user_two":
@@ -34,7 +36,7 @@ function getQueryParam(filterArray) {
 // GET ALL
 exports.getAll = function (req, res) {
   filters = getQueryParam(req.query);
-  db.Matching.findAndCountAll({ where: filters ? filters : {} }).then(Matchings => {
+  db.Matching.findAndCountAll({ where: filters ? filters : {}}).then(Matchings => {
     if (Matchings) {
       res.status(200);
       res.json(Matchings);
@@ -49,7 +51,7 @@ exports.getAll = function (req, res) {
 };
 
 exports.getMyMatchs = function (req, res) {
-  db.Matching.findAndCountAll({ where: Sequelize.or( { id_user_one: req.params.id }, { id_user_two: req.params.id } ) }).then(matchings => {
+  db.Matching.findAndCountAll({ where: Sequelize.or( { user_one: req.params.id }, { user_two: req.params.id } ) }).then(matchings => {
     if (matchings) {
       res.status(200);
       res.json(matching);

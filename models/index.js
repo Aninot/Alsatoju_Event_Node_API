@@ -37,17 +37,17 @@ Object.keys(db).forEach(modelName => {
 });
 
 db.sequelize = sequelize;
-
-// This function update the database at every start of the node server.
- async function initDb() {
-   // Regen the database table
-   await sequelize.sync({ force: true });
-   // Fill the app_user table
-   await db.AppUser.bulkCreate(users);
-   //Fill the type_preference table
-   await db.TypePreference.bulkCreate(typePreferences);
-   // Fill the preference table
-   await db.Preference.bulkCreate(preferences);
+/*
+    // This function update the database at every start of the node server.
+    async function initDb() {
+    // Regen the database table
+    await sequelize.sync({ force: true });
+    // Fill the app_user table
+    await db.AppUser.bulkCreate(users);
+    //Fill the type_preference table
+    await db.TypePreference.bulkCreate(typePreferences);
+    // Fill the preference table
+    await db.Preference.bulkCreate(preferences);
     // Fill the preference table
     await db.Like.bulkCreate(likes);
  }
@@ -58,5 +58,5 @@ db.sequelize = sequelize;
    // display the error encounter
    console.log('Error : ' + e);
  });
-
+*/
 module.exports = db;
