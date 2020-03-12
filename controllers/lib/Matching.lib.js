@@ -1,12 +1,9 @@
 const Matching = require('../../models/Matching.model');
-const AppUser = require('../../models/AppUser.model');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
-const AppUser = require('../../models/AppUser.model');
 const Sequelize = require("sequelize");
 let db = require(`../../models/index`);
-const Sequelize = require('sequelize');
 
 const ForEach = require('../../services/ForEach.Service');
 
@@ -40,7 +37,14 @@ exports.getAll = function (req, res) {
   filters = getQueryParam(req.query);
   db.Matching.findAll({ 
     where: filters ? filters : {},
-    //include : [AppUser]
+    include : [{
+      model: db.AppUser,
+      as: 'UserOne'
+    },
+    {
+      model: db.AppUser,
+      as: 'UserTwo'
+    }]
   }).then(Matchings => {
     if (Matchings) {
       res.status(200);
@@ -88,7 +92,7 @@ exports.postMatching = function (req, res) {
     res.json(Matching);
     res.end();
   }).catch(error => {
-    res.status(500);
+    res.status(400);
     res.json(error);
   });
 };
