@@ -158,16 +158,21 @@ exports.deleteAppUser = function (req, res) {
 };
 
 exports.postLogin = function (req, res) {
+  let email = req.body.email;
+  // On check que le mail ait le bon format
+  if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    // Si c'est pas le cas on rentre ici
+    res.status(400);
+    res.json({ 'message': 'Invalid email format' });
+    // Pour arreter la lecture du code on s'arrete avec un return void
+    return ;
+  }
   db.AppUser.findOne({
-    where: {
-      email: req.body.email
-    }
+    where: { email: email }
   }).then(appUser => {
     if (!appUser) {
       res.status(400);
-      res.json({
-        'message ': 'error while login'
-      });
+      res.json({ 'message': 'error while login' });
       res.end();
     }
     bcrypt.compare(req.body.password, appUser.password, function (err, result) {
@@ -181,15 +186,11 @@ exports.postLogin = function (req, res) {
           if (err) {
             console.log(err);
           }
-          res.json({
-            'token': token
-          });
+          res.json({ 'token': token });
         });
       } else {
         res.status(400);
-        res.json({
-          'message': 'error while login'
-        });
+        res.json({ 'message': 'error while login' });
         res.end();
       }
     });
