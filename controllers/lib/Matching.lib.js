@@ -67,7 +67,15 @@ exports.getMyMatchs = function (req, res) {
       Sequelize.or(
         { UserOneId: req.params.id }, 
         { UserTwoId: req.params.id }
-      )
+      ),
+    include : [{
+      model: db.AppUser,
+      as: 'UserOne'
+    },
+    {
+      model: db.AppUser,
+      as: 'UserTwo'
+    }]
   }).then(matchings => {
     if (matchings) {
       res.status(200);
