@@ -41,6 +41,11 @@
 }
 ```
 
+## Documentation
+
+* install the npm module with this command : ``npm install apidoc -g``
+* regenerate the documentation with this command : ``apidoc -i . -o ./doc -e node_modules``
+
 ## URL
 
 * `https://alsatoju-dev.herokuapp.com/` Pour la version develop
