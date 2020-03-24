@@ -44,9 +44,13 @@
 ## Documentation
 
 * install the npm module with this command : ``npm install apidoc -g``
-* regenerate the documentation with this command : ``apidoc -i . -o ./doc -e node_modules``
+* regenerate the documentation with this command : ``apidoc -i . -o ./doc -e node_modules`` The documentation is generated from comment into the code.
 
 ## URL
 
 * `https://alsatoju-dev.herokuapp.com/` Pour la version develop
 * `https://alsajuto.herokuapp.com/` Pour la version master
+
+## Security
+
+* Sequelize a ajouté à partir de la version 5.15 une sécurité contre la plupart des attaques classiques comme l'injection sql.
