@@ -2,7 +2,7 @@ const AppUserLib = require('../lib/AppUser.lib');
 
 module.exports = function (app) {
     /**
-     * @api {get} /app_users request all users informations
+     * @api {get} /app_users request all users informations.
      * @apiName GetAppUsers
      * @apiGroup AppUser
      * 
@@ -20,7 +20,7 @@ module.exports = function (app) {
     app.get('/app_users', AppUserLib.getAll)
 
     /**
-     * @api {get} /app_users/:id request one user informations
+     * @api {get} /app_users/:id request one user informations.
      * @apiName GetAppUser
      * @apiGroup AppUser
      * 
@@ -43,15 +43,31 @@ module.exports = function (app) {
      */
     app.get('/app_users/:id', AppUserLib.getOne)
 
-    // POST /app_users
+    /**
+     * @api {post} /app_users persist a new user in database.
+     * @apiName PostAppUser
+     * @apiGroup AppUser
+     */
     app.post('/app_users', AppUserLib.postAppUser)
 
-    // PATCH /app_users/:id
+    /**
+     * @api {patch} /app_users/:id update partially a user informations.
+     * @apiName PatchAppUser
+     * @apiGroup AppUser
+     */
     app.patch('/app_users/:id', AppUserLib.patchAppUser)
 
-    // DELETE /app_users/:id
+    /**
+     * @api {delete} /app_users/:id delete a user.
+     * @apiName DeleteAppUser
+     * @apiGroup AppUser
+     */
     app.delete('/app_users/:id', AppUserLib.deleteAppUser)
 
-    // POST /login
+    /**
+     * @api {post} /login Allow a user to retrieve a token (valid for 24 hours).
+     * @apiName PostLogin
+     * @apiGroup Login
+     */
     app.post('/login', AppUserLib.postLogin)
 }
