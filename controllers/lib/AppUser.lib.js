@@ -80,21 +80,17 @@ exports.getOne = function (req, res) {
 };
 
 exports.postAppUser = function (req, res) {
+  let body = {};
+  // On check que le mail ait le bon format
+  if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(body.email)) {
+    // Si c'est pas le cas on rentre ici
+    res.status(400);
+    res.json({ 'message': 'Invalid email format' });
+    // Pour arreter la lecture du code on s'arrete avec un return void
+    return;
+  }
   bcrypt.hash(req.body.password, 10, function (err, hash) {
-    db.AppUser.create({
-      email: req.body.email,
-      password: hash,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      gender: req.body.gender,
-      sexualityPref: req.body.sexualityPref,
-      avatar: req.body.avatar,
-      username: req.body.username,
-      ageTargeted: req.body.ageTargeted,
-      heightInCentimeter: req.body.heightInCentimeter,
-      description: req.body.description,
-      positionRange: req.body.positionRange
-    }).then(appUser => {
+    db.AppUser.create(req.body).then(appUser => {
       res.status(201);
       res.json(appUser);
       res.end();
@@ -108,7 +104,17 @@ exports.postAppUser = function (req, res) {
 // TODO: doit retourner l'objet mis à jour.
 exports.patchAppUser = function (req, res) {
   body = req.body;
-  if (req.body.password) {
+  if (body.email) {
+    // On check que le mail ait le bon format
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(body.email)) {
+      // Si c'est pas le cas on rentre ici
+      res.status(400);
+      res.json({ 'message': 'Invalid email format' });
+      // Pour arreter la lecture du code on s'arrete avec un return void
+      return;
+    }
+  }
+  if (body.password) {
     bcrypt.hash(req.body.password, 10, function (err, hash) {
       body.password = hash;
       db.AppUser.update(body, {
@@ -165,7 +171,7 @@ exports.postLogin = function (req, res) {
     res.status(400);
     res.json({ 'message': 'Invalid email format' });
     // Pour arreter la lecture du code on s'arrete avec un return void
-    return ;
+    return;
   }
   db.AppUser.findOne({
     where: { email: email }
