@@ -9,42 +9,13 @@
 * __models__ : contains the structure of the database
 * __services__ : different function use in the project
 * __tests__ : all the unit tests are save here
-
-## Debut de doc
-
-`POST /login`
-
-```JSON
-{
- "email": "email@mail.com",
- "password": "password"
-}
-```
-
-`POST /app_users`
-
-```JSON
-{
- "email": "ceciEstUnTest@test.com",
- "password": "password",
- "firstName": "",
- "lastName": "",
- "gender": "",
- "sexualityPref": "",
- "avatar": "",
- "username": "",
- "ageTargeted": "",
- "heightInCentimeter": "",
- "description": "",
- "positionRange": 0,
- "geoLocPosition": ""
-}
-```
+* __swagger.json__ : is the file where the documentation is stored.
 
 ## Documentation
 
-* install the npm module with this command : ``npm install apidoc -g``
-* regenerate the documentation with this command : ``apidoc -i . -o ./doc -e node_modules`` The documentation is generated from comment into the code.
+* The module name is Swagger-UI-Express
+* All the documentation is in the file swagger.json
+* The path for the doc is `host/api-docs/`
 
 ## URL
 
