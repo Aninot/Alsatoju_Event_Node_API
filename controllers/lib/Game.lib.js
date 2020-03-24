@@ -8,10 +8,11 @@ const ForEach = require('../../services/ForEach.Service');
 
 var isValid = function (prop) {
   switch (prop) {
-    case "user_id":
-      return "userId";
-    case "name":
-    case "url":
+    case "creatorId":
+    case "challengedId":
+    case "scoreCreator":
+    case "scoreChallenged":
+    case "gameType":
       return prop;
     default:
       return false;
