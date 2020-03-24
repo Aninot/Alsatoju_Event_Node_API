@@ -47,8 +47,8 @@ function getQueryParam(filterArray) {
 exports.getAll = function (req, res) {
   filters = getQueryParam(req.query);
   db.AppUser.findAll({
-    where: filters ? filters : {}
-  })
+      where: filters ? filters : {}
+    })
     .then(appUsers => {
       res.status(200);
       res.json(appUsers);
@@ -82,10 +82,12 @@ exports.getOne = function (req, res) {
 exports.postAppUser = function (req, res) {
   let body = {};
   // On check que le mail ait le bon format
-  if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(body.email)) {
+  if (!/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(body.email)) {
     // Si c'est pas le cas on rentre ici
     res.status(400);
-    res.json({ 'message': 'Invalid email format' });
+    res.json({
+      'message': 'Invalid email format'
+    });
     // Pour arreter la lecture du code on s'arrete avec un return void
     return;
   }
@@ -109,7 +111,9 @@ exports.patchAppUser = function (req, res) {
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(body.email)) {
       // Si c'est pas le cas on rentre ici
       res.status(400);
-      res.json({ 'message': 'Invalid email format' });
+      res.json({
+        'message': 'Invalid email format'
+      });
       // Pour arreter la lecture du code on s'arrete avec un return void
       return;
     }
@@ -118,11 +122,11 @@ exports.patchAppUser = function (req, res) {
     bcrypt.hash(req.body.password, 10, function (err, hash) {
       body.password = hash;
       db.AppUser.update(body, {
-        where: {
-          id: req.params.id
-        },
-        returning: true
-      })
+          where: {
+            id: req.params.id
+          },
+          returning: true
+        })
         .then(appUser => {
           res.status(200);
           res.json(appUser[1][0]);
@@ -133,10 +137,10 @@ exports.patchAppUser = function (req, res) {
     });
   } else {
     db.AppUser.update(body, {
-      where: {
-        id: req.params.id
-      }
-    })
+        where: {
+          id: req.params.id
+        }
+      })
       .then(appUser => {
         res.status(200);
         res.json(appUser);
@@ -169,16 +173,22 @@ exports.postLogin = function (req, res) {
   if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
     // Si c'est pas le cas on rentre ici
     res.status(400);
-    res.json({ 'message': 'Invalid email format' });
+    res.json({
+      'message': 'Invalid email format'
+    });
     // Pour arreter la lecture du code on s'arrete avec un return void
     return;
   }
   db.AppUser.findOne({
-    where: { email: email }
+    where: {
+      email: email
+    }
   }).then(appUser => {
     if (!appUser) {
       res.status(400);
-      res.json({ 'message': 'error while login' });
+      res.json({
+        'message': 'error while login'
+      });
       res.end();
     }
     bcrypt.compare(req.body.password, appUser.password, function (err, result) {
@@ -192,11 +202,15 @@ exports.postLogin = function (req, res) {
           if (err) {
             console.log(err);
           }
-          res.json({ 'token': token });
+          res.json({
+            'token': token
+          });
         });
       } else {
         res.status(400);
-        res.json({ 'message': 'error while login' });
+        res.json({
+          'message': 'error while login'
+        });
         res.end();
       }
     });
