@@ -1,0 +1,218 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "",
+    "description": "Here the description of the project"
+  },
+  "host": "alsajuto.herokuapp.com",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "tags name",
+      "description": "tags descriptions"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/app_users": {
+      "post": {
+        "tags": [
+          "AppUsers"
+        ],
+        "description": "Create new user in system",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "AppUsers"
+        ],
+        "summary": "Get all users in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items" : {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app_users/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "AppUsers"
+        ],
+        "summary": "Get user with given ID",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user with given ID",
+        "tags": [
+          "AppUsers"
+        ],
+        "responses": {
+          "200": {
+            "description": "User is deleted",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user with give ID",
+        "tags": [
+          "AppUsers"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User is updated",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "required": [
+        "email",
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password" : {
+          "type": "string",
+          "format": "password",
+          "writeOnly": true
+        }, 
+        "lastName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "gender" : {
+          "type": "string"
+        },
+        "sexualityPref" : {
+          "type": "string"
+        },
+        "avatar" : {
+          "type": "string"
+        },
+        "username" : {
+          "type": "string"
+        },
+        "ageTargeted" : {
+          "type": "string"
+        },
+        "heightInCentimeter" : {
+          "type": "number"
+        },
+        "description" : {
+          "type": "string"
+        },
+        "positionRange" : {
+          "type": "number"
+        },
+        "geoLocPosition" : {
+          "type": "string"
+        }
+      }
+    },
+    "Matching" : {
+
+    },
+    "Game" : {
+
+    },
+    "TypePreference" : {
+
+    },
+    "Preference" : {
+      "required": [
+        "id"
+      ],
+      "properties" : {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "type" : {
+          
+        },
+        "style" : {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

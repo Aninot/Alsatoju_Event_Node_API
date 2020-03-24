@@ -7,10 +7,6 @@
     "test": "mocha tests/*.test.js",
     "start": "nodemon server.js"
   },
-  "apidoc": {
-    "title": "This is a test",
-    "url" : "to be defined"
-  },
   "author": "Thomas ANINOT & Alan LIMA & Julien FEGER & Sarah GABRIEL-CALIXTE",
   "license": "ISC",
   "devDependencies": {
@@ -29,6 +25,7 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^7.18.1",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^5.21.3"
+    "sequelize": "^5.21.3",
+    "swagger-ui-express": "^4.1.4"
   }
 }
