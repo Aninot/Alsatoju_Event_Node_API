@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         updatedAt: false,
         underscored: true,
     });
-    TypePreference.associate = function (models) {
+    TypeGames.associate = function (models) {
         // associations can be defined here
     };
 
