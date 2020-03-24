@@ -37,7 +37,7 @@ Object.keys(db).forEach(modelName => {
 });
 
 db.sequelize = sequelize;
-/*
+
     // This function update the database at every start of the node server.
     async function initDb() {
     // Regen the database table
@@ -58,5 +58,5 @@ db.sequelize = sequelize;
    // display the error encounter
    console.log('Error : ' + e);
  });
-*/
+
 module.exports = db;
