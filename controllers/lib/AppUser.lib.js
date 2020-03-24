@@ -80,7 +80,7 @@ exports.getOne = function (req, res) {
 };
 
 exports.postAppUser = function (req, res) {
-  let body = {};
+  let body = req.body;
   // On check que le mail ait le bon format
   if (!/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(body.email)) {
     // Si c'est pas le cas on rentre ici
