@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         },
         template: {
-            type: DataTypes.INT
+            type: DataTypes.INTEGER
         },
     }, {
         tableName: 'type_games',

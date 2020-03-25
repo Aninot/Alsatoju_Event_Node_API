@@ -1,18 +1,18 @@
 const TypeGamesLib = require('../lib/TypeGames.lib');
 
 module.exports = function (app) {
-    // GET /typePreferences
+    // GET /typeGames
     app.get('/typeGames', TypeGamesLib.getAll)
 
-    // GET /typePreferences/:id
+    // GET /typeGames/:id
     app.get('/typeGames/:id', TypeGamesLib.getOne)
 
-    // POST /typePreferences
-    app.post('/typeGames', TypeGamesLib.postTypePreference)
+    // POST /typeGames
+    app.post('/typeGames', TypeGamesLib.postTypeGames)
 
-    // PATCH /typePreferences/:id
-    app.patch('/typeGames/:id', TypeGamesLib.patchTypePreference)
+    // PATCH /typeGames/:id
+    app.patch('/typeGames/:id', TypeGamesLib.patchTypeGames)
 
-    // DELETE /typePreferences/:id
-    app.delete('/typeGames/:id', TypeGamesLib.deleteTypePreference)
+    // DELETE /typeGames/:id
+    app.delete('/typeGames/:id', TypeGamesLib.deleteTypeGames)
 }
