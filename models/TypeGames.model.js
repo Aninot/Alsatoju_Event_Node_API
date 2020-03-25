@@ -2,7 +2,7 @@
 
 module.exports = (sequelize, DataTypes) => {
     const TypeGames = sequelize.define('TypeGames', {
-        id: {
+        typeGamesId: {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
