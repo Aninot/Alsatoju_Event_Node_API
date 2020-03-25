@@ -1,0 +1,362 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "",
+    "description": "Here the description of the project"
+  },
+  "host": "alsajuto.herokuapp.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/app_users": {
+      "post": {
+        "tags": [
+          "AppUsers"
+        ],
+        "description": "Create new user in system",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "AppUsers"
+        ],
+        "summary": "Get all users in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items" : {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app_users/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "AppUsers"
+        ],
+        "summary": "Get user with given ID",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user with given ID",
+        "tags": [
+          "AppUsers"
+        ],
+        "responses": {
+          "200": {
+            "description": "User is deleted",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update user with give ID",
+        "tags": [
+          "AppUsers"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User is updated",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/games" : {
+      "post": {
+        "tags": [
+          "Games"
+        ],
+        "description": "Create new game in system",
+        "parameters": [
+          {
+            "name": "game",
+            "in": "body",
+            "description": "Game that we want to create",
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "New game is created",
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Games"
+        ],
+        "summary": "Get all games in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items" : {
+                "$ref": "#/definitions/Game"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games/{gameId}": {
+      "parameters": [
+        {
+          "name": "gameId",
+          "in": "path",
+          "required": true,
+          "description": "ID of game that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Games"
+        ],
+        "summary": "Get game with given ID",
+        "responses": {
+          "200": {
+            "description": "Game is found",
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete game with given ID",
+        "tags": [
+          "Games"
+        ],
+        "responses": {
+          "200": {
+            "description": "game is deleted",
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update game with give ID",
+        "tags": [
+          "Games"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "Game with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Game is updated",
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "required": [
+        "email",
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password" : {
+          "type": "string",
+          "format": "password",
+          "writeOnly": true
+        }, 
+        "lastName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "gender" : {
+          "type": "string"
+        },
+        "sexualityPref" : {
+          "type": "string"
+        },
+        "avatar" : {
+          "type": "string"
+        },
+        "username" : {
+          "type": "string"
+        },
+        "ageTargeted" : {
+          "type": "string"
+        },
+        "heightInCentimeter" : {
+          "type": "number"
+        },
+        "description" : {
+          "type": "string"
+        },
+        "positionRange" : {
+          "type": "number"
+        },
+        "geoLocPosition" : {
+          "type": "string"
+        }
+      }
+    },
+    "Matching" : {
+      "required": [
+        "id"
+      ],
+      "properties" : {
+        "userOne" : {
+          "$ref": "#/definitions/User"
+        },
+        "userTwo" : {
+          "$ref": "#/definitions/User"
+        },
+        "responseUserOne" : {
+          "type": "boolean"
+        },
+        "responseUserTwo" : {
+          "type": "boolean"
+        }
+      }
+    },
+    "Game" : {
+      "required": [
+        "id"
+      ],
+      "properties" : {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "url" : {
+          "type" : "string"
+        }
+      }
+    },
+    "TypePreference" : {
+      "required": [
+        "id"
+      ],
+      "properties" : {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "type" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Preference" : {
+      "required": [
+        "id"
+      ],
+      "properties" : {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "type" : {
+          "$ref": "#/definitions/TypePreference"
+        },
+        "style" : {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
