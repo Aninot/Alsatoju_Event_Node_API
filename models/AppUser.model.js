@@ -1,5 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
+  const bcrypt = require('bcrypt');
   const AppUser = sequelize.define('AppUser', {
     id: {
       allowNull: false,
@@ -56,9 +57,9 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     freezeTableName: true,
     indexes: [{
-        unique: true,
-        fields: ['email']
-      },
+      unique: true,
+      fields: ['email']
+    },
     ],
     underscored: true,
   });
@@ -69,6 +70,20 @@ module.exports = (sequelize, DataTypes) => {
     delete values.password;
     return values;
   };
+
+  AppUser.beforeCreate(function (user, options) {
+    return bcrypt.hash(user.password, 10)
+      .then(function (hashedPw) {
+        user.password = hashedPw;
+      });
+  })
+
+  AppUser.beforeUpdate(function (user, options) {
+    return bcrypt.hash(user.password, 10)
+      .then(function (hashedPw) {
+        user.password = hashedPw;
+      });
+  })
 
   AppUser.associate = function (models) {
     // associations can be defined here
