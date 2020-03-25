@@ -1,4 +1,4 @@
-exports.likes = [
+exports.like = [
     {
         id : 1,
         userId: 1,

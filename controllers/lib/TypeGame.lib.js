@@ -1,4 +1,4 @@
-const TypeGames = require('../../models/TypeGames.model');
+const TypeGame = require('../../models/TypeGame.model');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
@@ -29,10 +29,10 @@ function getQueryParam(filterArray) {
 // GET ALL
 exports.getAll = function (req, res) {
     filters = getQueryParam(req.query)
-    db.TypeGames.findAndCountAll({ where: filters ? filters : {} }).then(typeGames => {
-        if (typeGames) {
+    db.TypeGame.findAndCountAll({ where: filters ? filters : {} }).then(TypeGame => {
+        if (TypeGame) {
             res.status(200);
-            res.json(typeGames);
+            res.json(TypeGame);
         } else {
             res.status(404);
             res.json({ "message": "No resources founded" })
@@ -44,7 +44,7 @@ exports.getAll = function (req, res) {
 };
 
 exports.getOne = function (req, res) {
-    db.TypeGames.findOne({ where: { id: req.params.id } }).then(typeGame => {
+    db.TypeGame.findOne({ where: { id: req.params.id } }).then(typeGame => {
         if (typeGame) {
             res.status(200);
             res.json(typeGame);
@@ -58,8 +58,8 @@ exports.getOne = function (req, res) {
     });
 };
 
-exports.postTypeGames = function (req, res) {
-    db.TypeGames.create({
+exports.postTypeGame = function (req, res) {
+    db.TypeGame.create({
         type: req.body.type,
     }).then(typeGame => {
         res.status(201);
@@ -71,8 +71,8 @@ exports.postTypeGames = function (req, res) {
     });
 };
 
-exports.patchTypeGames = function (req, res) {
-    db.TypeGames.update({ where: { type: req.params.type } }).then(typeGame => {
+exports.patchTypeGame = function (req, res) {
+    db.TypeGame.update({ where: { type: req.params.type } }).then(typeGame => {
         res.status(200);
         res.json(typeGame);
     }).catch(error => {
@@ -81,8 +81,8 @@ exports.patchTypeGames = function (req, res) {
     });
 };
 
-exports.deleteTypeGames = function (req, res) {
-    db.TypeGames.destroy({ where: { id: req.params.id } }).then(typeGame => {
+exports.deleteTypeGame = function (req, res) {
+    db.TypeGame.destroy({ where: { id: req.params.id } }).then(typeGame => {
         // here 204 no content we only send back the status code
         res.status(204);
         res.end();

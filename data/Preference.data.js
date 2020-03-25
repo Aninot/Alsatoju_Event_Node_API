@@ -1,4 +1,4 @@
-exports.preferences = [
+exports.preference = [
     {
         id : 1,
         typeId: 1,

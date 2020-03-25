@@ -1,4 +1,4 @@
-exports.games = [
+exports.game = [
     {
         id: 1,
         creatorId: 1,

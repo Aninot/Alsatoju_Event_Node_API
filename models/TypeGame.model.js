@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-    const TypeGames = sequelize.define('TypeGames', {
-        typeGamesId: {
+    const TypeGame = sequelize.define('TypeGame', {
+        id: {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
@@ -15,16 +15,16 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER
         },
     }, {
-        tableName: 'type_games',
+        tableName: 'type_game',
         freezeTableName: true,
         //timestamps: true,
         createdAt: false,
         updatedAt: false,
         underscored: true,
     });
-    TypeGames.associate = function (models) {
+    TypeGame.associate = function (models) {
         // associations can be defined here
     };
 
-    return TypeGames;
+    return TypeGame;
 };

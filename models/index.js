@@ -7,11 +7,11 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const { users } = require('../data/AppUser.data');
-const { typePreferences } = require('../data/TypePreference.data');
-const { preferences } = require('../data/Preference.data');
-const { likes } = require('../data/Like.data');
-const { games } = require('../data/Games.data');
-const { typeGames } = require('../data/TypeGames.data');
+const { typePreference } = require('../data/TypePreference.data');
+const { preference } = require('../data/Preference.data');
+const { like } = require('../data/Like.data');
+const { game } = require('../data/Game.data');
+const { typeGame } = require('../data/TypeGame.data');
 
 const db = {};
 
@@ -47,15 +47,16 @@ db.sequelize = sequelize;
     // Fill the app_user table
     await db.AppUser.bulkCreate(users);
     //Fill the type_preference table
-    await db.TypePreference.bulkCreate(typePreferences);
+    await db.TypePreference.bulkCreate(typePreference);
     // Fill the preference table
-    await db.Preference.bulkCreate(preferences);
+    await db.Preference.bulkCreate(preference);
     // Fill the preference table
-    await db.Like.bulkCreate(likes);
-    // Fill the games table
-    await db.Game.bulkCreate(games);
+    await db.Like.bulkCreate(like);
     // Fill the type_game table
-    await db.Like.bulkCreate(typeGames);
+    await db.TypeGame.bulkCreate(typeGame);
+    // Fill the games table
+    await db.Game.bulkCreate(game);
+    
  }
  initDb().then(() => {
    // if display then everything went good.

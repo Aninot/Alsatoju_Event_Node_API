@@ -1,4 +1,4 @@
-exports.type_games = [
+exports.typeGame = [
     {
         id : 1,
         type: "Quizz",
