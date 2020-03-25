@@ -7,9 +7,11 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const { users } = require('../data/AppUser.data');
-const { typePreferences } = require('../data/TypePreference.data');
-const { preferences } = require('../data/Preference.data');
-const { likes } = require('../data/Like.data');
+const { typePreference } = require('../data/TypePreference.data');
+const { preference } = require('../data/Preference.data');
+const { like } = require('../data/Like.data');
+const { game } = require('../data/Game.data');
+const { typeGame } = require('../data/TypeGame.data');
 
 const db = {};
 
@@ -37,7 +39,7 @@ Object.keys(db).forEach(modelName => {
 });
 
 db.sequelize = sequelize;
-/*
+
     // This function update the database at every start of the node server.
     async function initDb() {
     // Regen the database table
@@ -45,11 +47,16 @@ db.sequelize = sequelize;
     // Fill the app_user table
     await db.AppUser.bulkCreate(users);
     //Fill the type_preference table
-    await db.TypePreference.bulkCreate(typePreferences);
+    await db.TypePreference.bulkCreate(typePreference);
     // Fill the preference table
-    await db.Preference.bulkCreate(preferences);
+    await db.Preference.bulkCreate(preference);
     // Fill the preference table
-    await db.Like.bulkCreate(likes);
+    await db.Like.bulkCreate(like);
+    // Fill the type_game table
+    await db.TypeGame.bulkCreate(typeGame);
+    // Fill the games table
+    await db.Game.bulkCreate(game);
+    
  }
  initDb().then(() => {
    // if display then everything went good.
@@ -58,5 +65,5 @@ db.sequelize = sequelize;
    // display the error encounter
    console.log('Error : ' + e);
  });
-*/
+
 module.exports = db;

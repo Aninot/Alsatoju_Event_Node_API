@@ -1,18 +1,18 @@
 const TypePreferenceLib = require('../lib/TypePreference.lib');
 
 module.exports = function (app) {
-    // GET /typePreferences
-    app.get('/typePreferences', TypePreferenceLib.getAll)
+    // GET /type_preferences
+    app.get('/type_preferences', TypePreferenceLib.getAll)
 
-    // GET /typePreferences/:id
-    app.get('/typePreferences/:id', TypePreferenceLib.getOne)
+    // GET /type_preferences/:id
+    app.get('/type_preferences/:id', TypePreferenceLib.getOne)
 
-    // POST /typePreferences
-    app.post('/typePreferences', TypePreferenceLib.postTypePreference)
+    // POST /type_preferences
+    app.post('/type_preferences', TypePreferenceLib.postTypePreference)
 
-    // PATCH /typePreferences/:id
-    app.patch('/typePreferences/:id', TypePreferenceLib.patchTypePreference)
+    // PATCH /type_preferences/:id
+    app.patch('/type_preferences/:id', TypePreferenceLib.patchTypePreference)
 
-    // DELETE /typePreferences/:id
-    app.delete('/typePreferences/:id', TypePreferenceLib.deleteTypePreference)
+    // DELETE /type_preferences/:id
+    app.delete('/type_preferences/:id', TypePreferenceLib.deleteTypePreference)
 }

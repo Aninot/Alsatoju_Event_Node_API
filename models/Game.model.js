@@ -8,13 +8,33 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    name: {
-      type: DataTypes.STRING
+    creatorId: {
+      type: DataTypes.INTEGER,
+      references:{
+        model: 'app_user',
+        key : 'id'
+      }
     },
-    url: {
-      type: DataTypes.STRING
+    challengedId: {
+      type: DataTypes.INTEGER,
+      references:{
+        model: 'app_user',
+        key: 'id'
+      }
+    },
+    gameType: {
+      type: DataTypes.INTEGER,
+      references:{
+          model: 'type_game',
+          key: 'id'
+      },
+    },
+    scoreCreator: {
+      type: DataTypes.STRING,
+    },
+    scoreChallenged: {
+      type: DataTypes.STRING,
     }
-
   }, {
     freezeTableName: true,
     //timestamps: true,
