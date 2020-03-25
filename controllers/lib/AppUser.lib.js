@@ -112,19 +112,16 @@ exports.postAppUser = function (req, res) {
 // TODO: doit retourner l'objet mis à jour.
 exports.patchAppUser = function (req, res) {
   body = req.body;
-  if (body.email) {
-    // On check que le mail ait le bon format
-    if (!/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(body.email)) {
-      // Si c'est pas le cas on rentre ici
-      res.status(400);
-      res.json({
-        'message': 'Invalid email format'
-      });
-      // Pour arreter la lecture du code on s'arrete avec un return void
-      return;
-    }
+  // On check que le mail ait le bon format
+  if (body.email && !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(body.email)) {
+    // Si c'est pas le cas on rentre ici
+    res.status(400);
+    res.json({
+      'message': 'Invalid email format'
+    });
+    // Pour arreter la lecture du code on s'arrete avec un return void
+    return;
   }
-
   db.AppUser.update(body, {
     where: {
       id: req.params.id
@@ -156,9 +153,8 @@ exports.deleteAppUser = function (req, res) {
 };
 
 exports.postLogin = function (req, res) {
-  let email = req.body.email;
   // On check que le mail ait le bon format
-  if (!/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
+  if (body.email && !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(body.email)) {
     // Si c'est pas le cas on rentre ici
     res.status(400);
     res.json({

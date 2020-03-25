@@ -55,7 +55,7 @@
             "description": "OK",
             "schema": {
               "type": "array",
-              "items" : {
+              "items": {
                 "$ref": "#/definitions/User"
               }
             }
@@ -84,6 +84,9 @@
             "schema": {
               "$ref": "#/definitions/User"
             }
+          },
+          "404": {
+            "description": "ressource not found"
           }
         }
       },
@@ -93,11 +96,14 @@
           "AppUsers"
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "User is deleted",
             "schema": {
               "$ref": "#/definitions/User"
             }
+          },
+          "404": {
+            "description": "ressource not found"
           }
         }
       },
@@ -122,11 +128,14 @@
             "schema": {
               "$ref": "#/definitions/User"
             }
+          },
+          "404": {
+            "description": "ressource not found"
           }
         }
       }
     },
-    "/games" : {
+    "/games": {
       "post": {
         "tags": [
           "Games"
@@ -164,7 +173,7 @@
             "description": "OK",
             "schema": {
               "type": "array",
-              "items" : {
+              "items": {
                 "$ref": "#/definitions/Game"
               }
             }
@@ -193,6 +202,9 @@
             "schema": {
               "$ref": "#/definitions/Game"
             }
+          },
+          "404": {
+            "description": "ressource not found"
           }
         }
       },
@@ -202,11 +214,14 @@
           "Games"
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "game is deleted",
             "schema": {
               "$ref": "#/definitions/Game"
             }
+          },
+          "404": {
+            "description": "ressource not found"
           }
         }
       },
@@ -231,6 +246,9 @@
             "schema": {
               "$ref": "#/definitions/Game"
             }
+          },
+          "404": {
+            "description": "ressource not found"
           }
         }
       }
@@ -239,122 +257,137 @@
   "definitions": {
     "User": {
       "required": [
-        "email",
-        "id"
+        "email"
       ],
       "properties": {
         "id": {
           "type": "string",
-          "uniqueItems": true
+          "uniqueItems": true,
+          "readOnly": true
         },
         "email": {
           "type": "string",
           "uniqueItems": true
         },
-        "password" : {
+        "password": {
           "type": "string",
           "format": "password",
           "writeOnly": true
-        }, 
+        },
         "lastName": {
           "type": "string"
         },
         "firstName": {
           "type": "string"
         },
-        "gender" : {
+        "gender": {
           "type": "string"
         },
-        "sexualityPref" : {
+        "sexualityPref": {
           "type": "string"
         },
-        "avatar" : {
+        "avatar": {
           "type": "string"
         },
-        "username" : {
+        "username": {
           "type": "string"
         },
-        "ageTargeted" : {
+        "ageTargeted": {
           "type": "string"
         },
-        "heightInCentimeter" : {
+        "heightInCentimeter": {
           "type": "number"
         },
-        "description" : {
+        "description": {
           "type": "string"
         },
-        "positionRange" : {
+        "positionRange": {
           "type": "number"
         },
-        "geoLocPosition" : {
+        "geoLocPosition": {
           "type": "string"
         }
       }
     },
-    "Matching" : {
-      "required": [
-        "id"
-      ],
-      "properties" : {
-        "userOne" : {
+    "Matching": {
+      "properties": {
+        "userOne": {
           "$ref": "#/definitions/User"
         },
-        "userTwo" : {
+        "userTwo": {
           "$ref": "#/definitions/User"
         },
-        "responseUserOne" : {
+        "responseUserOne": {
           "type": "boolean"
         },
-        "responseUserTwo" : {
+        "responseUserTwo": {
           "type": "boolean"
         }
       }
     },
-    "Game" : {
-      "required": [
-        "id"
-      ],
-      "properties" : {
+    "Game": {
+      "properties": {
         "id": {
-          "type": "string",
-          "uniqueItems": true
+          "type": "number",
+          "uniqueItems": true,
+          "readOnly": true
         },
-        "name" : {
+        "creatorId": {
+          "type": "string"
+        },
+        "challengedId": {
+          "type": "string"
+        },
+        "gameType": {
+          "type": "number"
+        },
+        "scoreCreator" : {
           "type" : "string"
         },
-        "url" : {
-          "type" : "string"
+        "scoreChallenged" : {
+          "type": "string"
         }
       }
     },
-    "TypePreference" : {
-      "required": [
-        "id"
-      ],
-      "properties" : {
+    "TypePreference": {
+      "properties": {
         "id": {
           "type": "string",
-          "uniqueItems": true
+          "uniqueItems": true,
+          "readOnly": true
         },
-        "type" : {
-          "type" : "string"
+        "type": {
+          "type": "string"
         }
       }
     },
-    "Preference" : {
-      "required": [
-        "id"
-      ],
-      "properties" : {
+    "Preference": {
+      "properties": {
         "id": {
           "type": "string",
-          "uniqueItems": true
+          "uniqueItems": true,
+          "readOnly": true
         },
-        "type" : {
+        "type": {
           "$ref": "#/definitions/TypePreference"
         },
-        "style" : {
+        "style": {
           "type": "string"
+        }
+      }
+    },
+    "TypeGame" : {
+      "properties" : {
+        "id" : {
+          "type": "number",
+          "uniqueItems": true,
+          "readOnly": true
+        },
+        "type" : {
+          "type": "string"
+        },
+        "template" : {
+          "type": "integer"
         }
       }
     }
