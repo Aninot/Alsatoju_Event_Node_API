@@ -10,6 +10,8 @@ const { users } = require('../data/AppUser.data');
 const { typePreferences } = require('../data/TypePreference.data');
 const { preferences } = require('../data/Preference.data');
 const { likes } = require('../data/Like.data');
+const { games } = require('../data/Games.data');
+const { typeGames } = require('../data/TypeGames.data');
 
 const db = {};
 
@@ -50,6 +52,10 @@ db.sequelize = sequelize;
     await db.Preference.bulkCreate(preferences);
     // Fill the preference table
     await db.Like.bulkCreate(likes);
+    // Fill the games table
+    await db.Game.bulkCreate(games);
+    // Fill the type_game table
+    await db.Like.bulkCreate(typeGames);
  }
  initDb().then(() => {
    // if display then everything went good.
