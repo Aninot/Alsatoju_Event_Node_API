@@ -9,7 +9,8 @@ exports.users = [
         sexualityPref: "Male",
         username: "2T",
         ageTargeted: "22-28",
-        heighInCentimeter: 191
+        heighInCentimeter: 191,
+        number: "0102030405"
     },
     {
         id: 2,
@@ -21,7 +22,8 @@ exports.users = [
         sexualityPref: "Male",
         username: "",
         ageTargeted: "",
-        heighInCentimeter: null
+        heighInCentimeter: null,
+        number : "0607800910"
     },
     {
         id: 3,
@@ -33,7 +35,8 @@ exports.users = [
         sexualityPref: "Female",
         username: "",
         ageTargeted: "",
-        heighInCentimeter: null
+        heighInCentimeter: null,
+        number : "1011121314"
     },
     {
         id: 4,
@@ -45,6 +48,7 @@ exports.users = [
         sexualityPref: "Male",
         username: "",
         ageTargeted: "",
-        heighInCentimeter: null
+        heighInCentimeter: null,
+        number : "1516171819"
     },
 ];
