@@ -153,6 +153,7 @@ exports.deleteAppUser = function (req, res) {
 };
 
 exports.postLogin = function (req, res) {
+  body = req.body;
   // On check que le mail ait le bon format
   if (body.email && !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(body.email)) {
     // Si c'est pas le cas on rentre ici
