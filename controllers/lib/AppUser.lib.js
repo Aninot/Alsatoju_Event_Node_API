@@ -27,6 +27,7 @@ var isValid = function (prop) {
     case "gender":
     case "avatar":
     case "description":
+    case "number":
       return prop;
     default:
       return false;
