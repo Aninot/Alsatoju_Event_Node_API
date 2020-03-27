@@ -106,13 +106,41 @@ exports.postMatching = function (req, res) {
 };
 
 exports.patchMatching = function (req, res) {
-  db.Matching.update({ where: { name: req.params.name } }).then(Matching => {
-    res.status(200);
-    res.json(Matching);
-  }).catch(error => {
-    res.status(500);
-    res.json(error);
-  });
+    let userId = req.body.id;
+    console.log(req.params)
+    console.log(req.body)
+    db.Matching.findAll({ where: {id:req.params.id}
+    }).then(Match => {
+        console.log(Match.dataValues)
+        if(Match.UserOneId == userId) {
+            Match.update({ responseUserOne:req.body.response})
+            .success(function() {
+                res.status(200);
+                res.end();
+            })
+            .failure(function() {
+                res.status(500);
+                res.end();
+            });
+        }
+        else if(Match.UserTwoId == userId){
+            Match.update({responseUserTwo: req.body.response})
+            .success(function() {
+                res.status(200);
+                res.end();
+            })
+            .failure(function() {
+                res.status(500);
+                res.end();
+            });
+
+        }
+        else {
+            res.status(404);
+            res.end();
+        }
+    })
+
 };
 
 exports.deleteMatching = function (req, res) {
