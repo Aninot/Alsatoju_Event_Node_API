@@ -61,6 +61,14 @@ describe('DELETE /app_users/:id', () => {
   });
 });
 
-describe('', () => {
-  it('doit ajouter un user avec des préférence')
+describe('POST /login', () => {
+  it('doit retourner un token', (done) => {
+    request(app)
+    .post('/login')
+    .send({ email: "alanlima898@mail.com", password: "password" })
+    .expect(200)
+    .expect(res => {
+      expect(res.body.token.toBeDefined)
+    })
+  })
 })

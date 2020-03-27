@@ -2,16 +2,17 @@ const Matching = require('../../models/Matching.model');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
+const Sequelize = require("sequelize");
 let db = require(`../../models/index`);
 
 const ForEach = require('../../services/ForEach.Service');
 
 var isValid = function (prop) {
   switch (prop) {
-    case "id_user_one":
-        return "idUserOne";
-    case "id_user_two":
-        return "idUserTwo";
+    case "user_one":
+        return "UserOneId";
+    case "user_two":
+        return "UserTwoId";
     case "response_user_one":
         return "responseUserOne";
     case "response_user_two":
@@ -34,7 +35,17 @@ function getQueryParam(filterArray) {
 // GET ALL
 exports.getAll = function (req, res) {
   filters = getQueryParam(req.query);
-  db.Matching.findAndCountAll({ where: filters ? filters : {} }).then(Matchings => {
+  db.Matching.findAll({ 
+    where: filters ? filters : {},
+    include : [{
+      model: db.AppUser,
+      as: 'UserOne'
+    },
+    {
+      model: db.AppUser,
+      as: 'UserTwo'
+    }]
+  }).then(Matchings => {
     if (Matchings) {
       res.status(200);
       res.json(Matchings);
@@ -43,21 +54,38 @@ exports.getAll = function (req, res) {
       res.json({ "message": "No resources founded" })
     }
   }).catch(error => {
+    console.log(error);
     res.status(400);
     res.json(error);
   });
 };
 
 exports.getMyMatchs = function (req, res) {
-  db.Matching.findAndCountAll({ where: Sequelize.or( { id_user_one: req.params.id }, { id_user_two: req.params.id } ) }).then(matchings => {
+  console.log(req.params)
+  db.Matching.findAll({ 
+    where:
+      Sequelize.or(
+        { UserOneId: req.params.id }, 
+        { UserTwoId: req.params.id }
+      ),
+    include : [{
+      model: db.AppUser,
+      as: 'UserOne'
+    },
+    {
+      model: db.AppUser,
+      as: 'UserTwo'
+    }]
+  }).then(matchings => {
     if (matchings) {
       res.status(200);
-      res.json(matching);
+      res.json(matchings);
     } else {
       res.status(404);
       res.json({ "message": "Resource not found" })
     }
   }).catch(error => {
+    console.log(error);
     res.status(400);
     res.json(error);
   });
@@ -72,19 +100,47 @@ exports.postMatching = function (req, res) {
     res.json(Matching);
     res.end();
   }).catch(error => {
-    res.status(500);
+    res.status(400);
     res.json(error);
   });
 };
 
 exports.patchMatching = function (req, res) {
-  db.Matching.update({ where: { name: req.params.name } }).then(Matching => {
-    res.status(200);
-    res.json(Matching);
-  }).catch(error => {
-    res.status(500);
-    res.json(error);
-  });
+    let userId = req.body.id;
+    console.log(req.params)
+    console.log(req.body)
+    db.Matching.findAll({ where: {id:req.params.id}
+    }).then(Match => {
+        console.log(Match.dataValues)
+        if(Match.UserOneId == userId) {
+            Match.update({ responseUserOne:req.body.response})
+            .success(function() {
+                res.status(200);
+                res.end();
+            })
+            .failure(function() {
+                res.status(500);
+                res.end();
+            });
+        }
+        else if(Match.UserTwoId == userId){
+            Match.update({responseUserTwo: req.body.response})
+            .success(function() {
+                res.status(200);
+                res.end();
+            })
+            .failure(function() {
+                res.status(500);
+                res.end();
+            });
+
+        }
+        else {
+            res.status(404);
+            res.end();
+        }
+    })
+
 };
 
 exports.deleteMatching = function (req, res) {

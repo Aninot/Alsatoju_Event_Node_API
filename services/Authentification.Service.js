@@ -5,7 +5,8 @@ exports.isAuthenticated = function(req, res, next) {
         // retrieve the authorization header and parse out the
         // JWT using the split function
         let token = req.headers.authorization.split(" ")[1];
-        let privateKey = "6G_/FKE@93P!F.D?LlsFH/Vdf%sY74$ghR5fhj6FJ-dghCJfzog$!ri";
+        // On récup la private key dans le fichier.env
+        let privateKey = process.env.privateKey;
         // Here we validate that the JSON Web Token is valid and has been 
         // created using the same private pass phrase
         jwt.verify(token, privateKey, { algorithm: 'HS512' }, (err, user) => {

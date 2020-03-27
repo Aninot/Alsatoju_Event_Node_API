@@ -16,14 +16,18 @@ var isValid = function (prop) {
       return "ageTargeted";
     case "height_in_centimeter":
       return "heightInCentimeter";
+    case "sexuality_pref":
+      return "sexualityPref";
+    case "position_range":
+      return "positionRange";
+    case "geo_loc_position":
+      return "geoLocPosition";
     case "email":
     case "username":
-    case "sexualityPref":
     case "gender":
     case "avatar":
     case "description":
-    case "positionRange":
-    case "geoLocPosition":
+    case "number":
       return prop;
     default:
       return false;
@@ -43,8 +47,15 @@ function getQueryParam(filterArray) {
 // GET ALL
 exports.getAll = function (req, res) {
   filters = getQueryParam(req.query);
+  limit = req.query.limit ? req.query.limit : null;
+  sortBy = req.query.sort_by ? req.query.sort_by : 'id';
+  sortOrder = req.query.sort_order ? req.query.sort_order : 'DESC';
   db.AppUser.findAll({
-    where: filters ? filters : {}
+    where: filters ? filters : {},
+    limit: limit,
+    order: [
+      [sortBy, sortOrder]
+    ]
   })
     .then(appUsers => {
       res.status(200);
@@ -77,65 +88,53 @@ exports.getOne = function (req, res) {
 };
 
 exports.postAppUser = function (req, res) {
-  bcrypt.hash(req.body.password, 10, function (err, hash) {
-    db.AppUser.create({
-      email: req.body.email,
-      password: hash,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      gender: req.body.gender,
-      sexuality: req.body.sexuality,
-      avatar: req.body.avatar,
-      username: req.body.username,
-      minAge: req.body.minAge,
-      maxAge: req.body.maxAge,
-      length: req.body.length,
-      description: req.body.description
-    }).then(appUser => {
-      res.status(201);
-      res.json(appUser);
-      res.end();
-    }).catch(error => {
-      res.status(400);
-      res.json(error);
+  let body = req.body;
+  // On check que le mail ait le bon format
+  if (!/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(body.email)) {
+    // Si c'est pas le cas on rentre ici
+    res.status(400);
+    res.json({
+      'message': 'Invalid email format'
     });
+    // Pour arreter la lecture du code on s'arrete avec un return void
+    return;
+  }
+  db.AppUser.create(req.body).then(appUser => {
+    res.status(201);
+    res.json(appUser);
+    res.end();
+  }).catch(error => {
+    res.status(400);
+    console.log(error);
+    res.json(error);
   });
 };
 
 // TODO: doit retourner l'objet mis à jour.
 exports.patchAppUser = function (req, res) {
   body = req.body;
-  if (req.body.password) {
-    bcrypt.hash(req.body.password, 10, function (err, hash) {
-      body.password = hash;
-      db.AppUser.update(body, {
-        where: {
-          id: req.params.id
-        },
-        returning: true
-      })
-        .then(appUser => {
-          res.status(200);
-          res.json(appUser[1][0]);
-        }).catch(error => {
-          res.status(500);
-          res.json(error);
-        });
+  // On check que le mail ait le bon format
+  if (body.email && !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(body.email)) {
+    // Si c'est pas le cas on rentre ici
+    res.status(400);
+    res.json({
+      'message': 'Invalid email format'
     });
-  } else {
-    db.AppUser.update(body, {
-      where: {
-        id: req.params.id
-      }
-    })
-      .then(appUser => {
-        res.status(200);
-        res.json(appUser);
-      }).catch(error => {
-        res.status(500);
-        res.json(error);
-      });
+    // Pour arreter la lecture du code on s'arrete avec un return void
+    return;
   }
+  db.AppUser.update(body, {
+    where: {
+      id: req.params.id
+    },
+    returning: true
+  }).then(appUser => {
+    res.status(200);
+    res.json(appUser[1][0]);
+  }).catch(error => {
+    res.status(500);
+    res.json(error);
+  });
 };
 
 // here we only send back the status code
@@ -155,15 +154,26 @@ exports.deleteAppUser = function (req, res) {
 };
 
 exports.postLogin = function (req, res) {
+  body = req.body;
+  // On check que le mail ait le bon format
+  if (body.email && !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(body.email)) {
+    // Si c'est pas le cas on rentre ici
+    res.status(400);
+    res.json({
+      'message': 'Invalid email format'
+    });
+    // Pour arreter la lecture du code on s'arrete avec un return void
+    return;
+  }
   db.AppUser.findOne({
     where: {
-      email: req.body.email
+      email: email
     }
   }).then(appUser => {
     if (!appUser) {
       res.status(400);
       res.json({
-        'message ': 'error while login'
+        'message': 'error while login'
       });
       res.end();
     }
