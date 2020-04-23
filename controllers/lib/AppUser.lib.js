@@ -2,7 +2,9 @@ const AppUser = require('../../models/AppUser.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const ForEach = require('../../services/ForEach.Service');
-const privateKey = "6G_/FKE@93P!F.D?LlsFH/Vdf%sY74$ghR5fhj6FJ-dghCJfzog$!ri";
+const dotenv = require('dotenv');
+dotenv.config();
+const privateKey = process.env.PRIVATE_KEY;
 let db = require('../../models/index');
 
 var isValid = function (prop) {
@@ -167,7 +169,7 @@ exports.postLogin = function (req, res) {
   }
   db.AppUser.findOne({
     where: {
-      email: email
+      email: req.body.email
     }
   }).then(appUser => {
     if (!appUser) {
@@ -180,9 +182,8 @@ exports.postLogin = function (req, res) {
     bcrypt.compare(req.body.password, appUser.password, function (err, result) {
       if (result) {
         jwt.sign({
-          appUser
+          id : appUser.id
         }, privateKey, {
-          algorithm: 'HS512',
           expiresIn: '24h'
         }, (err, token) => {
           if (err) {

@@ -5,46 +5,27 @@ const bcrypt = require('bcrypt');
 const Sequelize = require("sequelize");
 let db = require(`../../models/index`);
 
-const ForEach = require('../../services/ForEach.Service');
-
-var isValid = function (prop) {
-  switch (prop) {
-    case "user_one":
-        return "UserOneId";
-    case "user_two":
-        return "UserTwoId";
-    case "response_user_one":
-        return "responseUserOne";
-    case "response_user_two":
-        return "responseUserTwo";
-    default:
-      return false;
-  }
-}
-
-function getQueryParam(filterArray) {
-  let filters = {};
-  ForEach.forEach(filterArray, function (value, prop, obj) {
-    if (isValid(prop)) {
-      filters[isValid(prop)] = value;
-    }
-  });
-  return filters;
-}
-
 // GET ALL
 exports.getAll = function (req, res) {
-  filters = getQueryParam(req.query);
+  // Extract the token
+  token = req.headers.authorization.split(" ")[1];
+  token = jwt.decode(token);
+
   db.Matching.findAll({ 
-    where: filters ? filters : {},
-    include : [{
-      model: db.AppUser,
-      as: 'UserOne'
-    },
-    {
-      model: db.AppUser,
-      as: 'UserTwo'
-    }]
+    where:
+    // filter to retrieve the matching for the user
+      Sequelize.or(
+        {UserOneId : token.id},
+        {UserTwoId : token.id}
+      ),
+    // include : [{
+    //   model: db.AppUser,
+    //   as: 'UserOne'
+    // },
+    // {
+    //   model: db.AppUser,
+    //   as: 'UserTwo'
+    // }]
   }).then(Matchings => {
     if (Matchings) {
       res.status(200);

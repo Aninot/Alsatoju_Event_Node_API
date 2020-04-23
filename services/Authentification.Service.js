@@ -1,4 +1,6 @@
 'use strict';
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 
 exports.isAuthenticated = function(req, res, next) {
     if (typeof req.headers.authorization !== "undefined") {
@@ -6,12 +8,15 @@ exports.isAuthenticated = function(req, res, next) {
         // JWT using the split function
         let token = req.headers.authorization.split(" ")[1];
         // On récup la private key dans le fichier.env
-        let privateKey = process.env.privateKey;
+        dotenv.config();
+        let privateKey = process.env.PRIVATE_KEY;
         // Here we validate that the JSON Web Token is valid and has been 
         // created using the same private pass phrase
-        jwt.verify(token, privateKey, { algorithm: 'HS512' }, (err, user) => {
+        jwt.verify(token, privateKey, (err, user) => {
             // if there has been an error...
             if (err) {
+                console.log('error');
+                console.log(err);
                 // shut them out!
                 res.status(401).json({ error: "Unauthorized" });
                 throw new Error("Unauthorized");

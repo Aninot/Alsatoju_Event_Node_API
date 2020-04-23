@@ -6,6 +6,7 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
+const dotenv = require('dotenv');
 const { users } = require('../data/AppUser.data');
 const { typePreference } = require('../data/TypePreference.data');
 const { preference } = require('../data/Preference.data');
@@ -16,6 +17,7 @@ const { typeGame } = require('../data/TypeGame.data');
 const db = {};
 
 let sequelize;
+dotenv.config();
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
