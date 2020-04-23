@@ -6,7 +6,9 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
+const dataSql = fs.readFileSync(__dirname + '/../data/proc-stock/matching.sql').toString();
 const dotenv = require('dotenv');
+dotenv.config();
 const { users } = require('../data/AppUser.data');
 const { typePreference } = require('../data/TypePreference.data');
 const { preference } = require('../data/Preference.data');
@@ -17,7 +19,6 @@ const { typeGame } = require('../data/TypeGame.data');
 const db = {};
 
 let sequelize;
-dotenv.config();
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
@@ -58,8 +59,10 @@ db.sequelize = sequelize;
     // await db.TypeGame.bulkCreate(typeGame);
     // Fill the games table
     // await db.Game.bulkCreate(game);
-    
+    // Add the storedProc
+    // await db.sequelize.query(dataSql)
  }
+
  initDb().then(() => {
    // if display then everything went good.
    console.log('Everything OK');

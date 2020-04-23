@@ -5,6 +5,9 @@ module.exports = function (app) {
     // GET /matchings
     app.get('/matchings', JwtMiddleware.isAuthenticated, MatchingLib.getAll)
 
+    // GET /matchings/refresh
+    app.get('/matchings/refresh', JwtMiddleware.isAuthenticated, MatchingLib.refresh)
+
     // GET /matchings/:id
     app.get('/matchings/:id', JwtMiddleware.isAuthenticated, MatchingLib.getMyMatchs)
 
