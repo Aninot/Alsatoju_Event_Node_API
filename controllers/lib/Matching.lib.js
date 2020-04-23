@@ -22,6 +22,13 @@ exports.getAll = function (req, res) {
         { UserOneId: token.id },
         { UserTwoId: token.id }
       ),
+    attributes: [
+      "id",
+      "responseUserOne",
+      "responseUserTwo",
+      ["user_one_id", "userOne"],
+      ["user_two_id", "userTwo"]
+    ]
   }).then(Matchings => {
     if (Matchings) {
       res.status(200);
@@ -45,14 +52,13 @@ exports.getMyMatchs = function (req, res) {
         { UserOneId: req.params.id },
         { UserTwoId: req.params.id }
       ),
-    include: [{
-      model: db.AppUser,
-      as: 'UserOne'
-    },
-    {
-      model: db.AppUser,
-      as: 'UserTwo'
-    }]
+    attributes: [
+      "id",
+      "responseUserOne",
+      "responseUserTwo",
+      ["user_one_id", "userOne"],
+      ["user_two_id", "userTwo"]
+    ]
   }).then(matchings => {
     if (matchings) {
       res.status(200);
@@ -68,26 +74,17 @@ exports.getMyMatchs = function (req, res) {
   });
 };
 
-exports.postMatching = function (req, res) {
-  db.Matching.create({
-    name: req.body.name,
-    url: req.body.url
-  }).then(Matching => {
-    res.status(201);
-    res.json(Matching);
-    res.end();
-  }).catch(error => {
-    res.status(400);
-    res.json(error);
-  });
-};
-
 exports.patchMatching = function (req, res) {
   let userId = req.body.id;
-  console.log(req.params)
-  console.log(req.body)
   db.Matching.findAll({
-    where: { id: req.params.id }
+    where: { id: req.params.id },
+    attributes: [
+      "id",
+      "responseUserOne",
+      "responseUserTwo",
+      ["user_one_id", "userOne"],
+      ["user_two_id", "userTwo"]
+    ]
   }).then(Match => {
     console.log(Match.dataValues)
     if (Match.UserOneId == userId) {
@@ -122,7 +119,9 @@ exports.patchMatching = function (req, res) {
 };
 
 exports.deleteMatching = function (req, res) {
-  db.Matching.destroy({ where: { id: req.params.id } }).then(Matchings => {
+  db.Matching.destroy({
+    where: { id: req.params.id }
+  }).then(Matchings => {
     // here 204 no content we only send back the status code
     res.status(204);
     res.end();
@@ -134,7 +133,7 @@ exports.deleteMatching = function (req, res) {
 
 exports.refresh = function (req, res) {
   token = extractToken(req);
-
+  
   db.sequelize.query("SELECT do_matching(:id)", {
     replacements: { id: token.id }
   })
