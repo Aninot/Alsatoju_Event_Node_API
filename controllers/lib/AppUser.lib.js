@@ -182,7 +182,7 @@ exports.postLogin = function (req, res) {
     bcrypt.compare(req.body.password, appUser.password, function (err, result) {
       if (result) {
         jwt.sign({
-          id : appUser.id
+          id: appUser.id
         }, privateKey, {
           expiresIn: '24h'
         }, (err, token) => {
@@ -203,3 +203,48 @@ exports.postLogin = function (req, res) {
     });
   });
 };
+
+exports.resetPassword = function (req, res) {
+  email = req.body.email
+  if (!email || !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
+    res.status(400);
+    res.json({ message: "No email provided or Invalid Format" });
+  }
+
+  db.AppUser.findOne({
+    where: { email: req.body.email }
+  }).then(user => {
+    jwt.sign({ id: user.id },
+      privateKey,
+      { expiresIn: '1h' },
+      (err, token) => {
+        if (err) {
+          console.log(err);
+        }
+        res.json({ message: "email sent", "url": "" + token });
+      });
+  }).catch(error => {
+    console.log(error);
+  })
+}
+
+exports.patchPassword = function (req, res) {
+  token = jwt.decode(req.query.token);
+  password = req.body.password;
+
+  if (!password || !token) {
+    res.status(400);
+    res.json({ message: "invalid token or no password provided" });
+  }
+
+  db.AppUser.update({ "password": password }, {
+    where: { id: token.id }
+  }).then(user => {
+    // TODO: Implementer un system de mailing pour retourner le password
+    res.status(200);
+    res.json({ message: "Password updated" });
+  }).catch(error => {
+    res.status(500)
+    console.log(error)
+  })
+}
