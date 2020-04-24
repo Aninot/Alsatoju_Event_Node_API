@@ -22,7 +22,7 @@
         "tags": [
           "AppUsers"
         ],
-        "description": "Create new user in system",
+        "summary": "Create new user in system",
         "parameters": [
           {
             "name": "user",
@@ -108,7 +108,7 @@
         }
       },
       "patch": {
-        "summary": "Update user with give ID",
+        "summary": "Partial update of the user with ID given",
         "tags": [
           "AppUsers"
         ],
@@ -140,7 +140,7 @@
         "tags": [
           "Games"
         ],
-        "description": "Create new game in system",
+        "summary": "Create new game in system",
         "parameters": [
           {
             "name": "game",
@@ -226,7 +226,7 @@
         }
       },
       "patch": {
-        "summary": "Update game with give ID",
+        "summary": "Partial update of the game with give ID",
         "tags": [
           "Games"
         ],
@@ -251,6 +251,139 @@
             "description": "ressource not found"
           }
         }
+      }
+    },
+    "/matchings": {
+      "get": {
+        "tags": [
+          "Matchings"
+        ],
+        "summary": "Get all matchings for the user requester",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Matching"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/matchings/refresh": {
+      "get": {
+        "tags": [
+          "Matchings"
+        ],
+        "summary": "Get all matchings for the user requester + looking for new match",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Matching"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/matchings/{matchingId}": {
+      "parameters": [
+        {
+          "name": "matchingId",
+          "in": "path",
+          "required": true,
+          "description": "ID of matching that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Matchings"
+        ],
+        "summary": "Get matching with given ID",
+        "responses": {
+          "200": {
+            "description": "matchings is found",
+            "schema": {
+              "$ref": "#/definitions/Matching"
+            }
+          },
+          "404": {
+            "description": "ressource not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete matching with given ID",
+        "tags": [
+          "Matchings"
+        ],
+        "responses": {
+          "204": {
+            "description": "game is deleted",
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          },
+          "404": {
+            "description": "ressource not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Partial update of the matchings with give ID",
+        "tags": [
+          "Matchings"
+        ],
+        "parameters": [
+          {
+            "name": "matching",
+            "in": "body",
+            "description": "matching with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/Matching"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching is updated",
+            "schema": {
+              "$ref": "#/definitions/Matching"
+            }
+          },
+          "404": {
+            "description": "ressource not found"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [ "Login" ],
+        "summary": "Return a token valid for 24hours",
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "description": "credentials of the user to login",
+            "schema": {
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
       }
     }
   },
