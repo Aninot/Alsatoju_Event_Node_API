@@ -1,71 +1,71 @@
 exports.preference = [
     {
-        id : 1,
+        id: null,
         typeId: 1,
         style: "Pop"
     },
     {
-        id : 2,
+        id: null,
         typeId: 1,
         style: "Rock"
     },
     {
-        id : 3,
+        id: null,
         typeId: 1,
         style: "Rap"
     },
     {
-        id : 4,
+        id: null,
         typeId: 1,
         style: "Hip-Hop"
     },
     {
-        id : 5,
+        id: null,
         typeId: 1,
         style: "RnB"
     },
     {
-        id : 6,
+        id: null,
         typeId: 1,
         style: "Classique"
     },
     {
-        id : 7,
+        id: null,
         typeId: 1,
         style: "Jazz"
     },
     {
-        id : 8,
+        id: null,
         typeId: 2,
         style: "Policier"
     },
     {
-        id : 9,
+        id: null,
         typeId: 2,
         style: "Comedie"
     },
     {
-        id : 10,
+        id: null,
         typeId: 2,
         style: "Animation"
     },
     {
-        id : 11,
+        id: null,
         typeId: 2,
         style: "Action"
     },
     {
-        id : 12,
+        id: null,
         typeId: 2,
         style: "Fantastique"
     },
     {
-        id : 13,
+        id: null,
         typeId: 2,
         style: "Horreur"
     },
     {
-        id : 14,
+        id: null,
         typeId: 2,
         style: "Drame"
     }

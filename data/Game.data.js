@@ -1,6 +1,6 @@
 exports.game = [
     {
-        id: 1,
+        id: null,
         creatorId: 1,
         challengedId: 2,
         gameType: 1,

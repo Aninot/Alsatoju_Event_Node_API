@@ -1,6 +1,6 @@
 exports.users = [
     {
-        id: 1,
+        id: null,
         email: "alanlima898@gmail.com",
         password: "$2b$10$GxUxJ4SFTA823.Jnl4HXqO1y8d6VGwVQPdpQG4a9xpBnNIa/LlAP6",
         firstName: "Alan",
@@ -13,7 +13,7 @@ exports.users = [
         number: "0102030405"
     },
     {
-        id: 2,
+        id: null,
         email: "aninothomas@gmail.com",
         password: "$2b$10$GxUxJ4SFTA823.Jnl4HXqO1y8d6VGwVQPdpQG4a9xpBnNIa/LlAP6",
         firstName: "Thomas",
@@ -26,7 +26,7 @@ exports.users = [
         number : "0607800910"
     },
     {
-        id: 3,
+        id: null,
         email: "julien@hypecode.com",
         password: "$2b$10$GxUxJ4SFTA823.Jnl4HXqO1y8d6VGwVQPdpQG4a9xpBnNIa/LlAP6",
         firstName: "Julien",
@@ -39,7 +39,7 @@ exports.users = [
         number : "1011121314"
     },
     {
-        id: 4,
+        id: null,
         email: "sarah@aston.com",
         password: "$2b$10$GxUxJ4SFTA823.Jnl4HXqO1y8d6VGwVQPdpQG4a9xpBnNIa/LlAP6",
         firstName: "Sarah",
