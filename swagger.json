@@ -365,7 +365,9 @@
     },
     "/login": {
       "post": {
-        "tags": [ "Login" ],
+        "tags": [
+          "Login"
+        ],
         "summary": "Return a token valid for 24hours",
         "parameters": [
           {
@@ -384,6 +386,84 @@
             }
           }
         ]
+      }
+    },
+    "/reset_password": {
+      "get": {
+        "tags": [
+          "AppUsers"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "body",
+            "descrition": "the email of the user who need to set a new password",
+            "schema": {
+              "email": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "summary": "use to normaly sent a mail to reset the password of the user",
+        "responses": {
+          "200": {
+            "description": "successfully find the user and sent the mail",
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "url is temporary. When we set a mailing system it won't be in the response anymore"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found with this email",
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update the password of the user",
+        "tags": [
+          "AppUsers"
+        ],
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "desciption": "the new value for the password",
+            "schema": {
+              "properties": {
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully update the user",
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -474,10 +554,10 @@
         "gameType": {
           "type": "number"
         },
-        "scoreCreator" : {
-          "type" : "string"
+        "scoreCreator": {
+          "type": "string"
         },
-        "scoreChallenged" : {
+        "scoreChallenged": {
           "type": "string"
         }
       }
@@ -509,17 +589,17 @@
         }
       }
     },
-    "TypeGame" : {
-      "properties" : {
-        "id" : {
+    "TypeGame": {
+      "properties": {
+        "id": {
           "type": "number",
           "uniqueItems": true,
           "readOnly": true
         },
-        "type" : {
+        "type": {
           "type": "string"
         },
-        "template" : {
+        "template": {
           "type": "integer"
         }
       }
