@@ -53,12 +53,12 @@ module.exports = (sequelize, DataTypes) => {
     geoLocPosition: {
       type: DataTypes.STRING
     },
-    number : {
+    number: {
       type: DataTypes.STRING,
-      validate : { 
+      validate: {
         len: [10],
         isNumeric: true
-        }
+      }
     }
   }, {
     tableName: 'app_user',
@@ -78,6 +78,15 @@ module.exports = (sequelize, DataTypes) => {
     delete values.password;
     return values;
   };
+
+  /**
+   * @param password the password to be compared.
+   * @return Promise
+   */
+  AppUser.prototype.comparePassword = function (password) {
+    const appUser = this
+    return bcrypt.compare(password, appUser.password)
+  }
 
   AppUser.beforeCreate(function (user, options) {
     return bcrypt.hash(user.password, 10)
