@@ -155,54 +155,39 @@ exports.deleteAppUser = function (req, res) {
   });
 };
 
-exports.postLogin = function (req, res) {
-  body = req.body;
-  // On check que le mail ait le bon format
-  if (body.email && !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(body.email)) {
-    // Si c'est pas le cas on rentre ici
-    res.status(400);
-    res.json({
-      'message': 'Invalid email format'
-    });
-    // Pour arreter la lecture du code on s'arrete avec un return void
-    return;
-  }
-  db.AppUser.findOne({
-    where: {
-      email: req.body.email
+exports.postLogin = async function (req, res) {
+  try {
+    const { password, email } = req.body
+
+    // Check Pass and Email are present
+    if (!password || !email) {
+      return res.status(400).json({ message: 'Credentials missings' })
     }
-  }).then(appUser => {
+
+    // Retrieve the User from 
+    const appUser = await db.AppUser.findOne({ where: { email: email } })
     if (!appUser) {
-      res.status(400);
-      res.json({
-        'message': 'error while login'
-      });
-      res.end();
+      return res.status(400).json({ message: 'Wrong Mail or Pass' })
     }
-    bcrypt.compare(req.body.password, appUser.password, function (err, result) {
-      if (result) {
-        jwt.sign({
-          id: appUser.id
-        }, privateKey, {
-          expiresIn: '24h'
-        }, (err, token) => {
-          if (err) {
-            console.log(err);
-          }
-          res.json({
-            'token': token
-          });
-        });
-      } else {
-        res.status(400);
-        res.json({
-          'message': 'error while login'
-        });
-        res.end();
+  
+    // Check the pass
+    const validPass = await appUser.comparePassword(password)
+    if (!validPass) {
+      return res.status(400).json({ message: 'Wrong Mail or Pass' })
+    }
+
+    // Create the token
+    jwt.sign({ id: appUser.id }, privateKey, { expiresIn: '24h' }, (err, token) => {
+      if (err) {
+        console.log(err);
       }
-    });
-  });
-};
+      return res.status(200).json({ 'token': token })
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ message: "Oops something went wrong", detail: error })
+  }
+}
 
 exports.resetPassword = function (req, res) {
   email = req.body.email
