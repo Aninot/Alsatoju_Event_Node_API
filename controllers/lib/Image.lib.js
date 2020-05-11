@@ -10,42 +10,71 @@ exports.uploadFile = (req, res) => {
     data: req.file.buffer,
     user: token.id
   }).then(() => {
-    res.status(201)
-    res.json({ message: 'File uploaded successfully! -> filename = ' + req.file.originalname });
+    return res.status(201).json({ message: 'File uploaded successfully! -> filename = ' + req.file.originalname })
   }).catch(err => {
-    console.log(err);
-    res.status(500)
-    res.json({ message: 'Error', detail: err });
-  });
+    console.log(err)
+    return res.status(500).json({ message: 'Error', detail: err })
+  })
+}
+
+exports.reUploadFile = (req, res) => {
+  const token = ExtractToken.extractToken(req)
+  const { id } = req.params
+  db.Image.update({
+    type: req.file.mimetype,
+    name: req.file.originalname,
+    data: req.file.buffer,
+    user: token.id
+  }, { where: { user : id }, returning: true },).then(image => {
+    if (!image[1].length) {
+      return res.status(404).json({ message: 'No Image found' })
+    }
+    return res.status(200).json({ message: 'File uploaded successfully! -> filename = ' + req.file.originalname })
+  }).catch(err => {
+    console.log(err)
+    return res.status(500).json({ message: 'Error', detail: err })
+  })
 }
  
 exports.getAll = (req, res) => {
-  db.Image.findAll({attributes: ['id', 'name', 'user']}).then(images => {
-    res.status(200)
-    res.json(images)
+  db.Image.findAll({ attributes: ['id', 'name', 'user'] }).then(images => {
+    return res.status(200).json(images)
   }).catch(err => {
     console.log(err)
-    res.status(500)
-    res.json({ message: 'Error', detail: err })
-  });
+    return res.status(500).json({ message: 'Error', detail: err })
+  })
 }
  
 exports.getOne = (req, res) => {
-  db.Image.findOne({ where: { user: req.params.id } }).then(image => {
+  const { id } = req.params
+  db.Image.findOne({ where: { user: id } }).then(image => {
     if (!image) {
-      res.status(404)
-      return res.json({ message: 'No resultats found' })
+      return res.status(404).json({ message: 'No resultats found' })
     }
-    var imageContents = Buffer.from(image.data, "base64");
-    var readStream = new stream.PassThrough();
-    readStream.end(imageContents);
+    var imageContents = Buffer.from(image.data, "base64")
+    var readStream = new stream.PassThrough()
+    readStream.end(imageContents)
     
-    res.set('Content-disposition', 'attachment; filename=' + image.name);
-    res.set('Content-Type', image.type);
+    res.set('Content-disposition', 'attachment; filename=' + image.name)
+    res.set('Content-Type', image.type)
  
-    readStream.pipe(res);
+    readStream.pipe(res)
   }).catch(err => {
-    console.log(err);
-    res.json({ message: 'Error', detail: err });
-  });
+    console.log(err)
+    return res.status(500).json({ message: 'Error', detail: err })
+  })
+}
+
+exports.delete = (req, res) => {
+  const token = ExtractToken.extractToken(req)
+  const { id } = req.params
+  if (token.id !== id) {
+    return res.status(401).json({ message: 'Unauthorized' })
+  }
+  db.destroy({ where: { id: id } }).then(image => {
+    return res.status(204)
+  }).catch(err => {
+    console.log(err)
+    return res.status(500).json({ message: 'Error', detail: err })
+  })
 }

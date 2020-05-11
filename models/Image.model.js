@@ -15,14 +15,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     data: {
-      type: DataTypes.BLOB('long')
+      type: DataTypes.BLOB
     },
     user: {
       type: DataTypes.INTEGER,
       references: {
         model: 'app_user',
         key: 'id'
-      }
+      },
+      unique: true,
+      allowNull: false,
     }
   }, {
     tableName: 'image',
