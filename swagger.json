@@ -465,6 +465,84 @@
           }
         }
       }
+    },
+    "/images": {
+      "post": {
+        "tags": [
+          "Image"
+        ],
+        "summary": "Used to upload an Image. The user id in the token will be associate to this image",
+        "parameters": [
+          {
+            "name": "image",
+            "in": "form",
+            "description": "the image file you want to upload"
+          }
+        ],
+        "produces": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfuly uploaded",
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Image"
+        ],
+        "summary": "Retrieve list of all Image Uploaded",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "uniqueItems": true,
+                    "readOnly": true
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "user": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to download the image",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Image"
+        ],
+        "summary": "Retrieve the Image",
+        "responses": {
+        }
+      }
     }
   },
   "definitions": {
