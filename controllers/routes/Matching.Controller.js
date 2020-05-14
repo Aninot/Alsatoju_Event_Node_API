@@ -11,6 +11,9 @@ module.exports = function (app) {
     // GET /matchings/:id
     app.get('/matchings/:id', JwtMiddleware.isAuthenticated, MatchingLib.getMyMatchs)
 
+    // GET /matchings/:id
+    app.get('/matching/:id', JwtMiddleware.isAuthenticated, MatchingLib.getMatch)
+
     // PATCH /matchings/:id
     app.patch('/matchings/:id', JwtMiddleware.isAuthenticated, MatchingLib.patchMatching)
 
