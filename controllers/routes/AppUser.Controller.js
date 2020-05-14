@@ -4,6 +4,8 @@ const JwtMiddleware = require('../../services/Authentification.Service')
 module.exports = function (app) {
   app.get('/app_users', JwtMiddleware.isAuthenticated, AppUserLib.getAll)
 
+  app.get('/app_users/myProfile', JwtMiddleware.isAuthenticated, AppUserLib.getMyProfile)
+
   app.get('/app_users/:id', JwtMiddleware.isAuthenticated, AppUserLib.getOne)
 
   app.post('/app_users', AppUserLib.postAppUser)

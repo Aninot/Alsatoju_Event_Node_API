@@ -53,12 +53,12 @@ exports.getAll = function (req, res) {
   sortBy = req.query.sort_by ? req.query.sort_by : 'id';
   sortOrder = req.query.sort_order ? req.query.sort_order : 'DESC';
   db.AppUser.findAll({
-    where: filters ? filters : {},
-    limit: limit,
-    order: [
-      [sortBy, sortOrder]
-    ]
-  })
+      where: filters ? filters : {},
+      limit: limit,
+      order: [
+        [sortBy, sortOrder]
+      ]
+    })
     .then(appUsers => {
       res.status(200);
       res.json(appUsers);
@@ -66,6 +66,31 @@ exports.getAll = function (req, res) {
       res.status(400);
       res.json(error);
     });
+};
+
+// GET MY PROFILE
+exports.getMyProfile = function (req, res) {
+  token = req.headers.authorization.split(" ")[1];
+  token = jwt.decode(token);
+
+  db.AppUser.findOne({
+    where: {
+      id: token.id
+    }
+  }).then(appUser => {
+    if (appUser) {
+      res.status(200);
+      res.json(appUser);
+    } else {
+      res.status(404);
+      res.json({
+        "message": "Resource not found"
+      })
+    }
+  }).catch(error => {
+    res.status(400);
+    res.json(error);
+  });
 };
 
 exports.getOne = function (req, res) {
@@ -157,35 +182,57 @@ exports.deleteAppUser = function (req, res) {
 
 exports.postLogin = async function (req, res) {
   try {
-    const { password, email } = req.body
+    const {
+      password,
+      email
+    } = req.body
 
     // Check Pass and Email are present
     if (!password || !email) {
-      return res.status(400).json({ message: 'Credentials missings' })
+      return res.status(400).json({
+        message: 'Credentials missings'
+      })
     }
 
     // Retrieve the User from 
-    const appUser = await db.AppUser.findOne({ where: { email: email } })
+    const appUser = await db.AppUser.findOne({
+      where: {
+        email: email
+      }
+    })
     if (!appUser) {
-      return res.status(400).json({ message: 'Wrong Mail or Pass' })
+      return res.status(400).json({
+        message: 'Wrong Mail or Pass'
+      })
     }
-  
+
     // Check the pass
     const validPass = await appUser.comparePassword(password)
     if (!validPass) {
-      return res.status(400).json({ message: 'Wrong Mail or Pass' })
+      return res.status(400).json({
+        message: 'Wrong Mail or Pass'
+      })
     }
 
     // Create the token
-    jwt.sign({ id: appUser.id }, privateKey, { expiresIn: '24h' }, (err, token) => {
+    jwt.sign({
+      id: appUser.id
+    }, privateKey, {
+      expiresIn: '24h'
+    }, (err, token) => {
       if (err) {
         console.log(err);
       }
-      return res.status(200).json({ 'token': token })
+      return res.status(200).json({
+        'token': token
+      })
     })
   } catch (error) {
     console.log(error)
-    return res.status(500).json({ message: "Oops something went wrong", detail: error })
+    return res.status(500).json({
+      message: "Oops something went wrong",
+      detail: error
+    })
   }
 }
 
@@ -193,20 +240,30 @@ exports.resetPassword = function (req, res) {
   email = req.body.email
   if (!email || !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
     res.status(400);
-    res.json({ message: "No email provided or Invalid Format" });
+    res.json({
+      message: "No email provided or Invalid Format"
+    });
   }
 
   db.AppUser.findOne({
-    where: { email: req.body.email }
+    where: {
+      email: req.body.email
+    }
   }).then(user => {
-    jwt.sign({ id: user.id },
-      privateKey,
-      { expiresIn: '1h' },
+    jwt.sign({
+        id: user.id
+      },
+      privateKey, {
+        expiresIn: '1h'
+      },
       (err, token) => {
         if (err) {
           console.log(err);
         }
-        res.json({ message: "email sent", "url": "" + token });
+        res.json({
+          message: "email sent",
+          "url": "" + token
+        });
       });
   }).catch(error => {
     console.log(error);
@@ -219,15 +276,23 @@ exports.patchPassword = function (req, res) {
 
   if (!password || !token) {
     res.status(400);
-    res.json({ message: "invalid token or no password provided" });
+    res.json({
+      message: "invalid token or no password provided"
+    });
   }
 
-  db.AppUser.update({ "password": password }, {
-    where: { id: token.id }
+  db.AppUser.update({
+    "password": password
+  }, {
+    where: {
+      id: token.id
+    }
   }).then(user => {
     // TODO: Implementer un system de mailing pour retourner le password
     res.status(200);
-    res.json({ message: "Password updated" });
+    res.json({
+      message: "Password updated"
+    });
   }).catch(error => {
     res.status(500)
     console.log(error)
