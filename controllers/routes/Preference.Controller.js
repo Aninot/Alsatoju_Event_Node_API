@@ -1,18 +1,18 @@
-const PreferenceLib = require('../lib/Preference.lib');
+const PreferenceLib = require('../lib/Preference.lib')
 
 module.exports = function (app) {
-    // GET /preferences
-    app.get('/preferences', PreferenceLib.getAll)
+  // GET /preferences
+  app.get('/preferences', PreferenceLib.getAll)
 
-    // GET /preferences/:id
-    app.get('/preferences/:id', PreferenceLib.getOne)
+  // GET /preferences/:id
+  app.get('/preferences/:id', PreferenceLib.getOne)
 
-    // POST /preferences
-    app.post('/preferences', PreferenceLib.postPreference)
+  // POST /preferences
+  app.post('/preferences', PreferenceLib.postPreference)
 
-    // PATCH /preferences/:id
-    app.patch('/preferences/:id', PreferenceLib.patchPreference)
+  // PATCH /preferences/:id
+  app.patch('/preferences/:id', PreferenceLib.patchPreference)
 
-    // DELETE /preferences/:id
-    app.delete('/preferences/:id', PreferenceLib.deletePreference)
+  // DELETE /preferences/:id
+  app.delete('/preferences/:id', PreferenceLib.deletePreference)
 }

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = (sequelize, DataTypes) => {
   const Like = sequelize.define('Like', {
@@ -10,30 +10,27 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: {
       type: DataTypes.INTEGER,
-      references:{
+      references: {
         model: 'app_user',
-        key : 'id'
+        key: 'id'
       }
     },
     preference: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: 'Preference',
-            key : 'id'
-        }
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Preference',
+        key: 'id'
+      }
     }
   }, {
     freezeTableName: true,
-    //timestamps: true,
+    // timestamps: true,
     createdAt: false,
     updatedAt: false,
-    underscored: true,
-  });
+    underscored: true
+  })
   Like.associate = function (models) {
     // associations can be defined here
-  };
-  return Like;
-
-};
-
-
+  }
+  return Like
+}

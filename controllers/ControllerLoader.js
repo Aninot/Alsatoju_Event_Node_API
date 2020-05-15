@@ -1,10 +1,11 @@
-const fs = require('fs');
+const fs = require('fs')
+const path = require('path')
 
 // Getting an Array of the files in the controllers folder.
-let files = fs.readdirSync(__dirname + '/routes/');
+const files = fs.readdirSync(path.join(__dirname, '/routes/'))
 
 module.exports = app => {
-    files.forEach(fileName => {
-        require(__dirname + '/routes/' + fileName)(app);
-    });
+  files.forEach(fileName => {
+    require(path.join(__dirname, '/routes/', fileName))(app)
+  })
 }

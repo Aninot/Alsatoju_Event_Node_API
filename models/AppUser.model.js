@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 module.exports = (sequelize, DataTypes) => {
-  const bcrypt = require('bcrypt');
+  const bcrypt = require('bcrypt')
   const AppUser = sequelize.define('AppUser', {
     id: {
       allowNull: false,
@@ -67,17 +67,17 @@ module.exports = (sequelize, DataTypes) => {
     indexes: [{
       unique: true,
       fields: ['email']
-    },
+    }
     ],
-    underscored: true,
-  });
+    underscored: true
+  })
 
   // This function is used to not serialize the password.
   AppUser.prototype.toJSON = function () {
-    var values = Object.assign({}, this.get());
-    delete values.password;
-    return values;
-  };
+    var values = Object.assign({}, this.get())
+    delete values.password
+    return values
+  }
 
   /**
    * @param password the password to be compared.
@@ -91,20 +91,20 @@ module.exports = (sequelize, DataTypes) => {
   AppUser.beforeCreate(function (user, options) {
     return bcrypt.hash(user.password, 10)
       .then(function (hashedPw) {
-        user.password = hashedPw;
-      });
+        user.password = hashedPw
+      })
   })
 
   AppUser.beforeUpdate(function (user, options) {
     return bcrypt.hash(user.password, 10)
       .then(function (hashedPw) {
-        user.password = hashedPw;
-      });
+        user.password = hashedPw
+      })
   })
 
   AppUser.associate = function (models) {
     // associations can be defined here
-  };
+  }
 
-  return AppUser;
-};
+  return AppUser
+}

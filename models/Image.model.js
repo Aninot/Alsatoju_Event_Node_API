@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = (sequelize, DataTypes) => {
   const Image = sequelize.define('Image', {
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       unique: true,
-      allowNull: false,
+      allowNull: false
     }
   }, {
     tableName: 'image',
@@ -32,10 +32,10 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     createdAt: false,
     updatedAt: false,
-    underscored: true,
-  });
+    underscored: true
+  })
   Image.associate = function (models) {
     // associations can be defined here
-  };
-  return Image;
-};
+  }
+  return Image
+}
