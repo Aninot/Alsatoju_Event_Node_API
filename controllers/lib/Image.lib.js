@@ -1,7 +1,7 @@
 const stream = require('stream')
 const db = require('../../models/index')
 const ExtractToken = require('../../Utils/ExtractToken.Utils')
- 
+
 exports.uploadFile = (req, res) => {
   const token = ExtractToken.extractToken(req)
   db.Image.create({
@@ -25,7 +25,7 @@ exports.reUploadFile = (req, res) => {
     name: req.file.originalname,
     data: req.file.buffer,
     user: token.id
-  }, { where: { user : id }, returning: true },).then(image => {
+  }, { where: { user: id }, returning: true }).then(image => {
     if (!image[1].length) {
       return res.status(404).json({ message: 'No Image found' })
     }
@@ -35,7 +35,7 @@ exports.reUploadFile = (req, res) => {
     return res.status(500).json({ message: 'Error', detail: err })
   })
 }
- 
+
 exports.getAll = (req, res) => {
   db.Image.findAll({ attributes: ['id', 'name', 'user'] }).then(images => {
     return res.status(200).json(images)
@@ -44,20 +44,20 @@ exports.getAll = (req, res) => {
     return res.status(500).json({ message: 'Error', detail: err })
   })
 }
- 
+
 exports.getOne = (req, res) => {
   const { id } = req.params
   db.Image.findOne({ where: { user: id } }).then(image => {
     if (!image) {
       return res.status(404).json({ message: 'No resultats found' })
     }
-    var imageContents = Buffer.from(image.data, "base64")
+    var imageContents = Buffer.from(image.data, 'base64')
     var readStream = new stream.PassThrough()
     readStream.end(imageContents)
-    
+
     res.set('Content-disposition', 'attachment; filename=' + image.name)
     res.set('Content-Type', image.type)
- 
+
     readStream.pipe(res)
   }).catch(err => {
     console.log(err)
