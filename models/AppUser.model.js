@@ -26,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
     gender: {
       type: DataTypes.STRING
     },
-    // orientation sexuelle
     sexualityPref: {
       type: DataTypes.STRING
     },
@@ -42,16 +41,11 @@ module.exports = (sequelize, DataTypes) => {
     heightInCentimeter: {
       type: DataTypes.INTEGER
     },
-    // Stockage de la note vocale
     description: {
       type: DataTypes.STRING
     },
-    // Diametre de recherche de profils
-    positionRange: {
-      type: DataTypes.INTEGER
-    },
-    geoLocPosition: {
-      type: DataTypes.STRING
+    birthdayDate: {
+      type: DataTypes.DATEONLY
     },
     number: {
       type: DataTypes.STRING,
@@ -59,6 +53,14 @@ module.exports = (sequelize, DataTypes) => {
         len: [10],
         isNumeric: true
       }
+    },
+    // Diametre de recherche de profils
+    // @deprecated
+    positionRange: {
+      type: DataTypes.INTEGER
+    },
+    geoLocPosition: {
+      type: DataTypes.STRING
     }
   }, {
     tableName: 'app_user',
@@ -67,8 +69,7 @@ module.exports = (sequelize, DataTypes) => {
     indexes: [{
       unique: true,
       fields: ['email']
-    }
-    ],
+    }],
     underscored: true
   })
 
