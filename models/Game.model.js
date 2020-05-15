@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = (sequelize, DataTypes) => {
   const Game = sequelize.define('Game', {
@@ -10,40 +10,40 @@ module.exports = (sequelize, DataTypes) => {
     },
     creatorId: {
       type: DataTypes.INTEGER,
-      references:{
+      references: {
         model: 'app_user',
-        key : 'id'
+        key: 'id'
       }
     },
     challengedId: {
       type: DataTypes.INTEGER,
-      references:{
+      references: {
         model: 'app_user',
         key: 'id'
       }
     },
     gameType: {
       type: DataTypes.INTEGER,
-      references:{
-          model: 'type_game',
-          key: 'id'
-      },
+      references: {
+        model: 'type_game',
+        key: 'id'
+      }
     },
     scoreCreator: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     scoreChallenged: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     }
   }, {
     freezeTableName: true,
-    //timestamps: true,
+    // timestamps: true,
     createdAt: false,
     updatedAt: false,
-    underscored: true,
-  });
+    underscored: true
+  })
   Game.associate = function (models) {
     // associations can be defined here
-  };
-  return Game;
-};
+  }
+  return Game
+}

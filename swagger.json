@@ -22,7 +22,7 @@
         "tags": [
           "AppUsers"
         ],
-        "description": "Create new user in system",
+        "summary": "Create new user in system",
         "parameters": [
           {
             "name": "user",
@@ -108,7 +108,7 @@
         }
       },
       "patch": {
-        "summary": "Update user with give ID",
+        "summary": "Partial update of the user with ID given",
         "tags": [
           "AppUsers"
         ],
@@ -140,7 +140,7 @@
         "tags": [
           "Games"
         ],
-        "description": "Create new game in system",
+        "summary": "Create new game in system",
         "parameters": [
           {
             "name": "game",
@@ -226,7 +226,7 @@
         }
       },
       "patch": {
-        "summary": "Update game with give ID",
+        "summary": "Partial update of the game with give ID",
         "tags": [
           "Games"
         ],
@@ -250,6 +250,297 @@
           "404": {
             "description": "ressource not found"
           }
+        }
+      }
+    },
+    "/matchings": {
+      "get": {
+        "tags": [
+          "Matchings"
+        ],
+        "summary": "Get all matchings for the user requester",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Matching"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/matchings/refresh": {
+      "get": {
+        "tags": [
+          "Matchings"
+        ],
+        "summary": "Get all matchings for the user requester + looking for new match",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Matching"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/matchings/{matchingId}": {
+      "parameters": [
+        {
+          "name": "matchingId",
+          "in": "path",
+          "required": true,
+          "description": "ID of matching that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Matchings"
+        ],
+        "summary": "Get matching with given ID",
+        "responses": {
+          "200": {
+            "description": "matchings is found",
+            "schema": {
+              "$ref": "#/definitions/Matching"
+            }
+          },
+          "404": {
+            "description": "ressource not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete matching with given ID",
+        "tags": [
+          "Matchings"
+        ],
+        "responses": {
+          "204": {
+            "description": "game is deleted",
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          },
+          "404": {
+            "description": "ressource not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Partial update of the matchings with give ID",
+        "tags": [
+          "Matchings"
+        ],
+        "parameters": [
+          {
+            "name": "matching",
+            "in": "body",
+            "description": "matching with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/Matching"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching is updated",
+            "schema": {
+              "$ref": "#/definitions/Matching"
+            }
+          },
+          "404": {
+            "description": "ressource not found"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "summary": "Return a token valid for 24hours",
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "description": "credentials of the user to login",
+            "schema": {
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/reset_password": {
+      "get": {
+        "tags": [
+          "AppUsers"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "body",
+            "descrition": "the email of the user who need to set a new password",
+            "schema": {
+              "email": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "summary": "use to normaly sent a mail to reset the password of the user",
+        "responses": {
+          "200": {
+            "description": "successfully find the user and sent the mail",
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "url is temporary. When we set a mailing system it won't be in the response anymore"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found with this email",
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update the password of the user",
+        "tags": [
+          "AppUsers"
+        ],
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "desciption": "the new value for the password",
+            "schema": {
+              "properties": {
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully update the user",
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images": {
+      "post": {
+        "tags": [
+          "Image"
+        ],
+        "summary": "Used to upload an Image. The user id in the token will be associate to this image",
+        "parameters": [
+          {
+            "name": "image",
+            "in": "form",
+            "description": "the image file you want to upload"
+          }
+        ],
+        "produces": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfuly uploaded",
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Image"
+        ],
+        "summary": "Retrieve list of all Image Uploaded",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "uniqueItems": true,
+                    "readOnly": true
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "user": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to download the image",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Image"
+        ],
+        "summary": "Retrieve the Image",
+        "responses": {
         }
       }
     }
@@ -341,10 +632,10 @@
         "gameType": {
           "type": "number"
         },
-        "scoreCreator" : {
-          "type" : "string"
+        "scoreCreator": {
+          "type": "string"
         },
-        "scoreChallenged" : {
+        "scoreChallenged": {
           "type": "string"
         }
       }
@@ -376,17 +667,17 @@
         }
       }
     },
-    "TypeGame" : {
-      "properties" : {
-        "id" : {
+    "TypeGame": {
+      "properties": {
+        "id": {
           "type": "number",
           "uniqueItems": true,
           "readOnly": true
         },
-        "type" : {
+        "type": {
           "type": "string"
         },
-        "template" : {
+        "template": {
           "type": "integer"
         }
       }

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = (sequelize, DataTypes) => {
   const Matching = sequelize.define('Matching', {
@@ -16,26 +16,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     freezeTableName: true,
-    //timestamps: true,
+    // timestamps: true,
     createdAt: false,
     updatedAt: false,
-    underscored: true,
-  });
+    underscored: true
+  })
 
   Matching.prototype.toJSON = function () {
-    var values = Object.assign({}, this.get());
-    delete values.password;
-    delete values.UserOneId;
-    delete values.UserTwoId;
-    return values;
-  };
+    var values = Object.assign({}, this.get())
+    delete values.password
+    delete values.UserOneId
+    delete values.UserTwoId
+    return values
+  }
 
   Matching.associate = function (models) {
     // associations can be defined here
-    Matching.belongsTo(models.AppUser, { as : 'UserOne'});
-    Matching.belongsTo(models.AppUser, { as : 'UserTwo'});
-  };
+    Matching.belongsTo(models.AppUser, { as: 'UserOne' })
+    Matching.belongsTo(models.AppUser, { as: 'UserTwo' })
+  }
 
-  return Matching;
-
-};
+  return Matching
+}

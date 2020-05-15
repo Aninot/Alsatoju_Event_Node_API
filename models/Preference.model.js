@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = (sequelize, DataTypes) => {
   const Preference = sequelize.define('Preference', {
@@ -10,26 +10,23 @@ module.exports = (sequelize, DataTypes) => {
     },
     typeId: {
       type: DataTypes.INTEGER,
-      references:{
+      references: {
         model: 'type_preference',
-        key : 'id'
+        key: 'id'
       }
     },
     style: {
-        type: DataTypes.STRING
+      type: DataTypes.STRING
     }
   }, {
     freezeTableName: true,
-    //timestamps: true,
+    // timestamps: true,
     createdAt: false,
     updatedAt: false,
-    underscored: true,
-  });
+    underscored: true
+  })
   Preference.associate = function (models) {
     // associations can be defined here
-  };
-  return Preference;
-
-};
-
-
+  }
+  return Preference
+}

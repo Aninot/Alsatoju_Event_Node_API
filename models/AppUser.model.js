@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 module.exports = (sequelize, DataTypes) => {
-  const bcrypt = require('bcrypt');
+  const bcrypt = require('bcrypt')
   const AppUser = sequelize.define('AppUser', {
     id: {
       allowNull: false,
@@ -26,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
     gender: {
       type: DataTypes.STRING
     },
-    // orientation sexuelle
     sexualityPref: {
       type: DataTypes.STRING
     },
@@ -42,23 +41,26 @@ module.exports = (sequelize, DataTypes) => {
     heightInCentimeter: {
       type: DataTypes.INTEGER
     },
-    // Stockage de la note vocale
     description: {
       type: DataTypes.STRING
     },
+    birthdayDate: {
+      type: DataTypes.DATEONLY
+    },
+    number: {
+      type: DataTypes.STRING,
+      validate: {
+        len: [10],
+        isNumeric: true
+      }
+    },
     // Diametre de recherche de profils
+    // @deprecated
     positionRange: {
       type: DataTypes.INTEGER
     },
     geoLocPosition: {
       type: DataTypes.STRING
-    },
-    number : {
-      type: DataTypes.STRING,
-      validate : { 
-        len: [10],
-        isNumeric: true
-        }
     }
   }, {
     tableName: 'app_user',
@@ -67,35 +69,43 @@ module.exports = (sequelize, DataTypes) => {
     indexes: [{
       unique: true,
       fields: ['email']
-    },
-    ],
-    underscored: true,
-  });
+    }],
+    underscored: true
+  })
 
   // This function is used to not serialize the password.
   AppUser.prototype.toJSON = function () {
-    var values = Object.assign({}, this.get());
-    delete values.password;
-    return values;
-  };
+    var values = Object.assign({}, this.get())
+    delete values.password
+    return values
+  }
+
+  /**
+   * @param password the password to be compared.
+   * @return Promise
+   */
+  AppUser.prototype.comparePassword = function (password) {
+    const appUser = this
+    return bcrypt.compare(password, appUser.password)
+  }
 
   AppUser.beforeCreate(function (user, options) {
     return bcrypt.hash(user.password, 10)
       .then(function (hashedPw) {
-        user.password = hashedPw;
-      });
+        user.password = hashedPw
+      })
   })
 
   AppUser.beforeUpdate(function (user, options) {
     return bcrypt.hash(user.password, 10)
       .then(function (hashedPw) {
-        user.password = hashedPw;
-      });
+        user.password = hashedPw
+      })
   })
 
   AppUser.associate = function (models) {
     // associations can be defined here
-  };
+  }
 
-  return AppUser;
-};
+  return AppUser
+}

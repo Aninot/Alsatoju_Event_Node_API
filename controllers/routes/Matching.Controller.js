@@ -1,18 +1,19 @@
-const MatchingLib = require('../lib/Matching.lib');
+const MatchingLib = require('../lib/Matching.lib')
+const JwtMiddleware = require('../../services/Authentification.Service')
 
 module.exports = function (app) {
-    // GET /matchings
-    app.get('/matchings', MatchingLib.getAll)
+  // GET /matchings
+  app.get('/matchings', JwtMiddleware.isAuthenticated, MatchingLib.getAll)
 
-    // GET /matchings/:id
-    app.get('/matchings/:id', MatchingLib.getMyMatchs)
+  // GET /matchings/refresh
+  app.get('/matchings/refresh', JwtMiddleware.isAuthenticated, MatchingLib.refresh)
 
-    // POST /matchings
-    app.post('/matchings', MatchingLib.postMatching)
+  // GET /matchings/:id
+  app.get('/matchings/:id', JwtMiddleware.isAuthenticated, MatchingLib.getMatch)
 
-    // PATCH /matchings/:id
-    app.patch('/matchings/:id', MatchingLib.patchMatching)
+  // PATCH /matchings/:id
+  app.patch('/matchings/:id', JwtMiddleware.isAuthenticated, MatchingLib.patchMatching)
 
-    // DELETE /matchings/:id
-    app.delete('/matchings/:id', MatchingLib.deleteMatching)
+  // DELETE /matchings/:id
+  app.delete('/matchings/:id', JwtMiddleware.isAuthenticated, MatchingLib.deleteMatching)
 }
