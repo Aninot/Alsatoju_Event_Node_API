@@ -9,6 +9,7 @@ BEGIN
     -- 1) On récupère l'utilisateur via son ID
     -- 2) On cherche dans la table preference les utilisateurs qui ont les même préférences que notre user
     -- 3) On insère une relation pour chaque utilisateur DIFFERENT trouvé dans matching
+    -- 4) TODO : Ajouté un filtre sur l'age de l'user pour qu'il rentre dans les targets.
     
 
     RAISE NOTICE 'Recherche des partenaires potentiels...';

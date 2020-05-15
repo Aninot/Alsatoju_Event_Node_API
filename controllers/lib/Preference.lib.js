@@ -4,6 +4,8 @@ const ForEach = require('../../services/ForEach.Service')
 var isValid = function (prop) {
   switch (prop) {
     case 'type_id':
+    case 'type':
+    case 'types':
       return 'typeId'
     case 'style':
       return prop
@@ -27,64 +29,54 @@ exports.getAll = function (req, res) {
   const filters = getQueryParam(req.query)
   db.Preference.findAndCountAll({ where: filters || {} }).then(Preferences => {
     if (Preferences) {
-      res.status(200)
-      res.json(Preferences)
+      res.status(200).json(Preferences)
     } else {
-      res.status(404)
-      res.json({ message: 'No resources founded' })
+      res.status(404).json({ message: 'No resources founded' })
     }
   }).catch(error => {
-    res.status(400)
-    res.json(error)
+    console.log(error)
+    res.status(400).json({ message: 'Error', detail: error })
   })
 }
 
 exports.getOne = function (req, res) {
   db.Preference.findOne({ where: { id: req.params.id } }).then(preference => {
     if (preference) {
-      res.status(200)
-      res.json(preference)
+      res.status(200).json(preference)
     } else {
-      res.status(404)
-      res.json({ message: 'Resource not found' })
+      res.status(404).json({ message: 'Resource not found' })
     }
   }).catch(error => {
-    res.status(400)
-    res.json(error)
+    console.log(error)
+    res.status(400).json(error)
   })
 }
 
 exports.postPreference = function (req, res) {
+  const { typeId, style } = req.body
+
   db.Preference.create({
-    typeId: req.body.typeId,
-    style: req.body.style
+    typeId: typeId,
+    style: style
   }).then(Preference => {
-    res.status(201)
-    res.json(Preference)
-    res.end()
+    res.status(201).json(Preference).end()
   }).catch(error => {
-    res.status(500)
-    res.json(error)
+    res.status(500).json(error)
   })
 }
 
 exports.patchPreference = function (req, res) {
   db.Preference.update({ where: { style: req.params.style } }).then(Preference => {
-    res.status(200)
-    res.json(Preference)
+    res.status(200).json(Preference)
   }).catch(error => {
-    res.status(500)
-    res.json(error)
+    res.status(500).json(error)
   })
 }
 
 exports.deletePreference = function (req, res) {
   db.Preference.destroy({ where: { id: req.params.id } }).then(Preferences => {
-    // here 204 no content we only send back the status code
-    res.status(204)
-    res.end()
+    res.status(204).end()
   }).catch(error => {
-    res.status(400)
-    res.json(error)
+    res.status(400).json(error)
   })
 }
