@@ -1,5 +1,7 @@
 const db = require('../../models/index')
+const Sequelize = require('sequelize')
 const ForEach = require('../../services/ForEach.Service')
+const ExtractToken = require('../../Utils/ExtractToken.Utils')
 
 var isValid = function (prop) {
   switch (prop) {
@@ -25,7 +27,14 @@ function getQueryParam (filterArray) {
 // GET ALL
 exports.getAll = function (req, res) {
   const filters = getQueryParam(req.query)
-  db.Like.findAndCountAll({ where: filters || {} }).then(Likes => {
+  const token = ExtractToken.extractToken(req)
+
+  db.Like.findAndCountAll({
+    where: Sequelize.and(
+      filters || {},
+      { userId: token.id }
+    )
+  }).then(Likes => {
     if (Likes) {
       res.status(200)
       res.json(Likes)

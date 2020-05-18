@@ -45,6 +45,27 @@ exports.getAll = (req, res) => {
   })
 }
 
+exports.getMine = (req, res) => {
+  const { id } = ExtractToken.extractToken(req)
+
+  db.Image.findOne({ where: { user: id } }).then(image => {
+    if (!image) {
+      return res.status(404).json({ message: 'No resultats found' })
+    }
+    var imageContents = Buffer.from(image.data, 'base64')
+    var readStream = new stream.PassThrough()
+    readStream.end(imageContents)
+
+    res.set('Content-disposition', 'attachment; filename=' + image.name)
+    res.set('Content-Type', image.type)
+
+    readStream.pipe(res)
+  }).catch(err => {
+    console.log(err)
+    return res.status(500).json({ message: 'Error', detail: err })
+  })
+}
+
 exports.getOne = (req, res) => {
   const { id } = req.params
   db.Image.findOne({ where: { user: id } }).then(image => {
