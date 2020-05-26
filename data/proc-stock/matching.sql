@@ -15,7 +15,7 @@ BEGIN
     RAISE NOTICE 'Recherche des partenaires potentiels...';
 
     FOR utilisateurId IN
-                SELECT user_id FROM (SELECT distinct user_id FROM "Like" l WHERE preference IN (SELECT preference FROM "Like" l2 WHERE user_id = $1) AND user_id != $1) AS truc
+                SELECT user_id FROM (SELECT distinct user_id FROM "Like" l WHERE preference_id IN (SELECT preference_id FROM "Like" l2 WHERE user_id = $1) AND user_id != $1) AS truc
                 	WHERE
                 	(user_id NOT IN (SELECT user_two_id FROM "Matching" m WHERE user_one_id = $1))
                     AND (user_id NOT IN (SELECT user_one_id FROM "Matching" m2 WHERE user_two_id = $1))

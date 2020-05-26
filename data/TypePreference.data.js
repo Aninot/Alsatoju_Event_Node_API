@@ -1,10 +1,10 @@
 exports.typePreference = [
   {
     id: null,
-    type: 'Musique'
+    name: 'Musique'
   },
   {
     id: null,
-    type: 'Film'
+    name: 'Film'
   }
 ]

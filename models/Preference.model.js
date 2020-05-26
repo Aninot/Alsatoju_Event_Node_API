@@ -7,13 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
-    },
-    typeId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'type_preference',
-        key: 'id'
-      }
+
     },
     style: {
       type: DataTypes.STRING
@@ -27,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   })
   Preference.associate = function (models) {
     // associations can be defined here
+    Preference.belongsTo(models.TypePreference, { as: 'preferenceType', target: 'type', foreignKey: 'typeId' })
   }
   return Preference
 }

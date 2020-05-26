@@ -7,20 +7,6 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'app_user',
-        key: 'id'
-      }
-    },
-    preference: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'Preference',
-        key: 'id'
-      }
     }
   }, {
     freezeTableName: true,
@@ -31,6 +17,8 @@ module.exports = (sequelize, DataTypes) => {
   })
   Like.associate = function (models) {
     // associations can be defined here
+    Like.belongsTo(models.AppUser, { as: 'user', target: 'user' })
+    Like.belongsTo(models.Preference, { as: 'preference', target: 'preference' })
   }
   return Like
 }
