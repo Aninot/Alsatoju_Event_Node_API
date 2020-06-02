@@ -10,16 +10,10 @@ exports.getAll = function (req, res) {
   const token = ExtractToken.extractToken(req)
 
   db.Matching.findAll({
-    where: Sequelize.or(
-      Sequelize.and(
-        { UserOneId: token.id },
-        { responseUserOne: null }
+    where: Sequelize.and(
+        { responseUserOne: true },
+        { responseUserTwo: true }
       ),
-      Sequelize.and(
-        { UserTwoId: token.id },
-        { responseUserTwo: null }
-      )
-    ),
     attributes: [
       'id',
       'responseUserOne',
