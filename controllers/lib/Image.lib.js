@@ -52,14 +52,16 @@ exports.getMine = (req, res) => {
     if (!image) {
       return res.status(404).json({ message: 'No resultats found' })
     }
-    var imageContents = Buffer.from(image.data, 'base64')
-    var readStream = new stream.PassThrough()
-    readStream.end(imageContents)
+    let base64data = image.data.toString('base64');
+    return res.send(base64data)
+    // var imageContents = Buffer.from(image.data, 'base64')
+    // var readStream = new stream.PassThrough()
+    // readStream.end(imageContents)
 
-    res.set('Content-disposition', 'attachment; filename=' + image.name)
-    res.set('Content-Type', image.type)
+    // res.set('Content-disposition', 'attachment; filename=' + image.name)
+    // res.set('Content-Type', image.type)
 
-    readStream.pipe(res)
+    // readStream.pipe(res)
   }).catch(err => {
     console.log(err)
     return res.status(500).json({ message: 'Error', detail: err })
