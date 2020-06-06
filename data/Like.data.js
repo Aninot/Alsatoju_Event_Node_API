@@ -7,12 +7,7 @@ exports.like = [
   {
     id: null,
     userId: 1,
-    preferenceId: 2
-  },
-  {
-    id: null,
-    userId: 2,
-    preferenceId: 3
+    preferenceId: 9
   },
   {
     id: null,
@@ -22,22 +17,27 @@ exports.like = [
   {
     id: null,
     userId: 2,
-    preferenceId: 4
+    preferenceId: 10
   },
   {
     id: null,
-    userId: 2,
+    userId: 3,
     preferenceId: 5
   },
   {
     id: null,
     userId: 3,
-    preferenceId: 1
+    preferenceId: 8
   },
   {
     id: null,
     userId: 4,
-    preferenceId: 1
+    preferenceId: 5
+  },
+  {
+    id: null,
+    userId: 4,
+    preferenceId: 10
   }
 
 ]
