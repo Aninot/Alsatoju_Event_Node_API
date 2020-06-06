@@ -28,7 +28,7 @@ exports.getAll = function (req, res) {
   const filters = getQueryParam(req.query)
   const token = ExtractToken.extractToken(req)
 
-  db.Like.findAndCountAll({
+  db.Like.findAll({
     logging: console.log,
     where: Sequelize.and(
       filters || {},

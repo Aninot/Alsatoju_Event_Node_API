@@ -27,7 +27,7 @@ function getQueryParam (filterArray) {
 // GET ALL
 exports.getAll = function (req, res) {
   const filters = getQueryParam(req.query)
-  db.Game.findAndCountAll({ where: filters || {} }).then(Games => {
+  db.Game.findAll({ where: filters || {} }).then(Games => {
     if (Games) {
       res.status(200)
       res.json(Games)

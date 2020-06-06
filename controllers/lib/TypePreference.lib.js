@@ -23,7 +23,7 @@ function getQueryParam (filterArray) {
 // GET ALL
 exports.getAll = function (req, res) {
   const filters = getQueryParam(req.query)
-  db.TypePreference.findAndCountAll({ where: filters || {} }).then(TypePreferences => {
+  db.TypePreference.findAll({ where: filters || {} }).then(TypePreferences => {
     if (TypePreferences) {
       res.status(200)
       res.json(TypePreferences)
