@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     responseUserTwo: {
       type: DataTypes.BOOLEAN
+    },
+    gameId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'game',
+        key: 'id'
+      },
+      unique: true,
     }
   }, {
     freezeTableName: true,
@@ -32,8 +40,12 @@ module.exports = (sequelize, DataTypes) => {
 
   Matching.associate = function (models) {
     // associations can be defined here
-    Matching.belongsTo(models.AppUser, { as: 'UserOne' })
-    Matching.belongsTo(models.AppUser, { as: 'UserTwo' })
+    Matching.belongsTo(models.AppUser, {
+      as: 'UserOne'
+    })
+    Matching.belongsTo(models.AppUser, {
+      as: 'UserTwo'
+    })
   }
 
   return Matching
