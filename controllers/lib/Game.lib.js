@@ -72,7 +72,7 @@ exports.postGame = function (req, res) {
   const token = ExtractToken.extractToken(req)
   db.Game.create({
     creatorId: req.body.creatorId,
-    challengedId: req.body.creatorId
+    challengedId: req.body.challengedId
   }).then(Game => {
     res.status(201)
     res.json(Game)
