@@ -14,14 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     responseUserTwo: {
       type: DataTypes.BOOLEAN
     },
-    gameId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'game',
-        key: 'id'
-      },
-      unique: true,
-    }
+    // gameId: {
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     model: 'game',
+    //     key: 'id'
+    //   },
+    //   unique: true,
+    // }
   }, {
     freezeTableName: true,
     // timestamps: true,
