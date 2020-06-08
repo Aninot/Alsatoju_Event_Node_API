@@ -1,5 +1,7 @@
 const db = require('../../models/index')
 const ForEach = require('../../services/ForEach.Service')
+const ExtractToken = require('../../Utils/ExtractToken.Utils')
+
 
 var isValid = function (prop) {
   switch (prop) {
@@ -14,7 +16,7 @@ var isValid = function (prop) {
   }
 }
 
-function getQueryParam (filterArray) {
+function getQueryParam(filterArray) {
   const filters = {}
   ForEach.forEach(filterArray, function (value, prop, obj) {
     if (isValid(prop)) {
@@ -27,13 +29,17 @@ function getQueryParam (filterArray) {
 // GET ALL
 exports.getAll = function (req, res) {
   const filters = getQueryParam(req.query)
-  db.Game.findAll({ where: filters || {} }).then(Games => {
+  db.Game.findAll({
+    where: filters || {}
+  }).then(Games => {
     if (Games) {
       res.status(200)
       res.json(Games)
     } else {
       res.status(404)
-      res.json({ message: 'No resources founded' })
+      res.json({
+        message: 'No resources founded'
+      })
     }
   }).catch(error => {
     res.status(400)
@@ -42,13 +48,19 @@ exports.getAll = function (req, res) {
 }
 
 exports.getOne = function (req, res) {
-  db.Game.findOne({ where: { id: req.params.id } }).then(game => {
+  db.Game.findOne({
+    where: {
+      id: req.params.id
+    }
+  }).then(game => {
     if (game) {
       res.status(200)
       res.json(game)
     } else {
       res.status(404)
-      res.json({ message: 'Resource not found' })
+      res.json({
+        message: 'Resource not found'
+      })
     }
   }).catch(error => {
     res.status(400)
@@ -57,9 +69,10 @@ exports.getOne = function (req, res) {
 }
 
 exports.postGame = function (req, res) {
+  const token = ExtractToken.extractToken(req)
   db.Game.create({
-    name: req.body.name,
-    url: req.body.url
+    creatorId: req.body.creatorId,
+    challengedId: req.body.creatorId
   }).then(Game => {
     res.status(201)
     res.json(Game)
@@ -71,7 +84,11 @@ exports.postGame = function (req, res) {
 }
 
 exports.patchGame = function (req, res) {
-  db.Game.update({ where: { name: req.params.name } }).then(Game => {
+  db.Game.update({
+    where: {
+      name: req.params.name
+    }
+  }).then(Game => {
     res.status(200)
     res.json(Game)
   }).catch(error => {
@@ -81,7 +98,11 @@ exports.patchGame = function (req, res) {
 }
 
 exports.deleteGame = function (req, res) {
-  db.Game.destroy({ where: { id: req.params.id } }).then(Games => {
+  db.Game.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(Games => {
     // here 204 no content we only send back the status code
     res.status(204)
     res.end()
