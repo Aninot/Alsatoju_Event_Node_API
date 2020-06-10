@@ -1,5 +1,7 @@
 const db = require('../../models/index')
+const Sequelize = require('sequelize')
 const ForEach = require('../../services/ForEach.Service')
+const ExtractToken = require('../../Utils/ExtractToken.Utils')
 
 var isValid = function (prop) {
   switch (prop) {
@@ -21,11 +23,22 @@ function getQueryParam (filterArray) {
   })
   return filters
 }
-
 // GET ALL
 exports.getAll = function (req, res) {
   const filters = getQueryParam(req.query)
-  db.Like.findAndCountAll({ where: filters || {} }).then(Likes => {
+  const token = ExtractToken.extractToken(req)
+
+  db.Like.findAll({
+    logging: console.log,
+    where: Sequelize.and(
+      filters || {},
+      { userId: token.id }
+    ),
+    include: [
+      { model: db.AppUser, attributes: ['id'], as: 'user' },
+      { model: db.Preference, all: true, as: 'preference', nested: true }
+    ]
+  }).then(Likes => {
     if (Likes) {
       res.status(200)
       res.json(Likes)
@@ -34,13 +47,20 @@ exports.getAll = function (req, res) {
       res.json({ message: 'No resources founded' })
     }
   }).catch(error => {
+    console.log(error)
     res.status(400)
     res.json(error)
   })
 }
 
 exports.getOne = function (req, res) {
-  db.Like.findOne({ where: { id: req.params.id } }).then(like => {
+  db.Like.findOne({
+    where: { id: req.params.id },
+    include: [
+      { model: db.AppUser, attributes: ['id'], as: 'user' },
+      { model: db.Preference, all: true, as: 'preference', nested: true }
+    ]
+  }).then(like => {
     if (like) {
       res.status(200)
       res.json(like)
@@ -55,27 +75,36 @@ exports.getOne = function (req, res) {
 }
 
 exports.postLike = function (req, res) {
+  const token = ExtractToken.extractToken(req)
+  const { preferenceId, preference } = req.body
   db.Like.create({
-    userId: req.body.userId,
-    filmPreference: req.body.filmPreference,
-    musicPreference: req.body.musicPreference,
-    otherPreference: req.body.otherPreference
+    userId: token.id,
+    preferenceId: preferenceId || preference
   }).then(Like => {
     res.status(201)
     res.json(Like)
     res.end()
   }).catch(error => {
+    console.log(error)
     res.status(500)
     res.json(error)
   })
 }
 
 exports.patchLike = function (req, res) {
-  db.Like.update({ where: { id: req.params.id } }).then(Like => {
+  const token = ExtractToken.extractToken(req)
+  db.Like.update(req.body, {
+    where: Sequelize.and(
+      { id: req.params.id },
+      { userId: token.id }
+    ),
+    returning: true
+  }).then(Like => {
     res.status(200)
-    res.json(Like)
+    res.json(Like[1][0])
   }).catch(error => {
     res.status(500)
+    console.log(error)
     res.json(error)
   })
 }

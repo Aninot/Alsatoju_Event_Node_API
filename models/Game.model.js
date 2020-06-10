@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     creatorId: {
+      allowNull: false,
       type: DataTypes.INTEGER,
       references: {
         model: 'app_user',
@@ -16,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     challengedId: {
+      allowNull: false,
       type: DataTypes.INTEGER,
       references: {
         model: 'app_user',

@@ -7,6 +7,8 @@ module.exports = function (app) {
 
   app.get('/images/:id', JwtMiddleware.isAuthenticated, ImageLib.getOne)
 
+  app.get('/my_profil_picture', JwtMiddleware.isAuthenticated, ImageLib.getMine)
+
   app.post('/images', JwtMiddleware.isAuthenticated, upload.single('image'), ImageLib.uploadFile)
 
   app.patch('/images/:id', JwtMiddleware.isAuthenticated, upload.single('image'), ImageLib.reUploadFile)

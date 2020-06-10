@@ -2,42 +2,42 @@ exports.like = [
   {
     id: null,
     userId: 1,
-    preference: 1
+    preferenceId: 1
   },
   {
     id: null,
     userId: 1,
-    preference: 2
+    preferenceId: 9
   },
   {
     id: null,
     userId: 2,
-    preference: 3
+    preferenceId: 1
   },
   {
     id: null,
     userId: 2,
-    preference: 1
-  },
-  {
-    id: null,
-    userId: 2,
-    preference: 4
-  },
-  {
-    id: null,
-    userId: 2,
-    preference: 5
+    preferenceId: 10
   },
   {
     id: null,
     userId: 3,
-    preference: 1
+    preferenceId: 5
+  },
+  {
+    id: null,
+    userId: 3,
+    preferenceId: 8
   },
   {
     id: null,
     userId: 4,
-    preference: 1
+    preferenceId: 5
+  },
+  {
+    id: null,
+    userId: 4,
+    preferenceId: 10
   }
 
 ]

@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const ForEach = require('../../services/ForEach.Service')
 const dotenv = require('dotenv')
+const Sequelize = require('sequelize')
 dotenv.config()
 const privateKey = process.env.PRIVATE_KEY
 const db = require('../../models/index')
@@ -136,6 +137,7 @@ exports.patchAppUser = function (req, res) {
     res.json(appUser[1][0])
   }).catch(error => {
     res.status(500)
+    console.log(error)
     res.json(error)
   })
 }
@@ -152,16 +154,14 @@ exports.deleteAppUser = function (req, res) {
     res.end()
   }).catch(error => {
     res.status(400)
+    console.log(error)
     res.json(error)
   })
 }
 
 exports.postLogin = async function (req, res) {
   try {
-    const {
-      password,
-      email
-    } = req.body
+    const { password, email } = req.body
 
     // Check Pass and Email are present
     if (!password || !email) {
@@ -171,7 +171,7 @@ exports.postLogin = async function (req, res) {
     }
 
     // Retrieve the User from
-    const appUser = await db.AppUser.findOne({ where: { email: email } })
+    const appUser = await db.AppUser.findOne({ where: { email: { [Sequelize.Op.iLike]:  '%'+email+'%' } } })
     if (!appUser) {
       return res.status(400).json({
         message: 'Wrong Mail or Pass'

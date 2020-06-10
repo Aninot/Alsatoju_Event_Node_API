@@ -43,21 +43,21 @@ db.sequelize = sequelize
 // This function update the database at every start of the node server.
 async function initDb () {
   // Regen the database table
-  await sequelize.sync({ force: true })
+  await sequelize.sync({ force: true }).catch(e => { console.log(e) })
   // Fill the app_user table
-  await db.AppUser.bulkCreate(users)
+  await db.AppUser.bulkCreate(users).catch(e => { console.log(e) })
   // Fill the type_preference table
-  await db.TypePreference.bulkCreate(typePreference)
+  await db.TypePreference.bulkCreate(typePreference).catch(e => { console.log(e) })
   // Fill the preference table
-  await db.Preference.bulkCreate(preference)
+  await db.Preference.bulkCreate(preference).catch(e => { console.log(e) })
   // Fill the preference table
-  await db.Like.bulkCreate(like)
+  await db.Like.bulkCreate(like).catch(e => { console.log(e) })
   // Fill the type_game table
-  await db.TypeGame.bulkCreate(typeGame)
+  await db.TypeGame.bulkCreate(typeGame).catch(e => { console.log(e) })
   // Fill the games table
-  await db.Game.bulkCreate(game)
+  await db.Game.bulkCreate(game).catch(e => { console.log(e) })
   // Add the storedProc
-  await db.sequelize.query(dataSql)
+  await db.sequelize.query(dataSql).catch(e => { console.log(e) })
 }
 
 initDb().then(() => {
