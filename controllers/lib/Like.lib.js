@@ -91,22 +91,20 @@ exports.postLike = function (req, res) {
   })
 }
 
-exports.patchLike = function (req, res) {
+exports.patchLike = async function (req, res) {
   const token = ExtractToken.extractToken(req)
-  db.Like.update(req.body, {
-    where: Sequelize.and(
-      { id: req.params.id },
-      { userId: token.id }
-    ),
-    returning: true
-  }).then(Like => {
-    res.status(200)
-    res.json(Like[1][0])
-  }).catch(error => {
-    res.status(500)
-    console.log(error)
-    res.json(error)
-  })
+  const { preferenceId, typeId } = req.body
+  try {
+    likeId = await db.sequelize.query('SELECT l.id FROM "Like" l LEFT JOIN "Preference" p on l.preference_id = p.id WHERE l.user_id = ' + token.id + ' AND p.type_id = ' + typeId)
+    if (likeId) {
+      result = await db.sequelize.query('UPDATE ONLY "Like" l set preference_id = ' + preferenceId + ' FROM "Preference" p WHERE l.user_id = ' + token.id + ' AND p.type_id = ' + typeId)
+      res.status(200).json(result)
+    } else {
+      res.status(404).json({ message: "No previous Like of the same type to patch found."})
+    }
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 exports.deleteLike = function (req, res) {
