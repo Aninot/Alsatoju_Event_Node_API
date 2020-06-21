@@ -11,7 +11,7 @@ module.exports = function (app) {
   app.post('/likes', LikeLib.postLike)
 
   // PATCH /likes/:id
-  app.patch('/likes/:id', LikeLib.patchLike)
+  app.patch('/likes', LikeLib.patchLike)
 
   // DELETE /likes/:id
   app.delete('/likes/:id', LikeLib.deleteLike)
